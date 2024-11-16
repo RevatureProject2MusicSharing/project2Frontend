@@ -15,7 +15,6 @@
 .LoginLabel{
     display:flex;
     color:aliceblue;
-    align-self:flex-start;
     
 }
 #LoginHeader{
@@ -24,13 +23,6 @@
 }
 #icon{
     scale: 3;
-}
-.formTextBox{
-    border-radius: 5px;
-    border: 0px;
-    border-width:5px;
-    border-color:blue;
-    transition:cubic-bezier(0.55, 0.085, 0.68, 0.53)
 }
 .box {
     width: 200px;
@@ -44,6 +36,8 @@
   #indexBody{
     background: linear-gradient(rgba(0, 0, 0, 0.808) 0%, rgb(0, 0, 0) 100%)
   }
-
+button:hover{
+    border-color:aliceblue;
+}
 
 
