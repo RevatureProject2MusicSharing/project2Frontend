@@ -1,0 +1,49 @@
+
+#LoginBox{
+    display:flex;
+    background-color:#121212;
+    padding:150px;
+    border-radius:15px;
+    row-gap:150px;
+    flex-direction: column;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    
+}
+.LoginText{
+    color: aliceblue;
+}
+.LoginLabel{
+    display:flex;
+    color:aliceblue;
+    align-self:flex-start;
+    
+}
+#LoginHeader{
+    font-weight:bold;
+    font-size:50px;
+}
+#icon{
+    scale: 3;
+}
+.formTextBox{
+    border-radius: 5px;
+    border: 0px;
+    border-width:5px;
+    border-color:blue;
+    transition:cubic-bezier(0.55, 0.085, 0.68, 0.53)
+}
+.box {
+    width: 200px;
+    height: 80px;
+    border-radius: 50px;
+    background-color: #1ed760;
+    cursor: pointer;
+    align-content:center;
+  }
+
+  #indexBody{
+    background: linear-gradient(rgba(0, 0, 0, 0.808) 0%, rgb(0, 0, 0) 100%)
+  }
+
+
+
