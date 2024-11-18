@@ -4,6 +4,8 @@ import { FaPause, FaPlay } from "react-icons/fa";
 import './SongBar.css';
 import { RiSkipBackFill, RiSkipForwardFill } from 'react-icons/ri';
 import YouTube, { YouTubeProps } from 'react-youtube';
+import { a } from 'motion/react-client';
+import { useAppContext } from '../AppContext/AppContext';
 
 // Type for the state management (for the song progress, volume, and play state)
 interface SongBarState {
@@ -13,8 +15,12 @@ interface SongBarState {
   volume: number;
 }
 
+
 const SongBar: React.FC = () => {
   // Initial state setup using TypeScript
+
+  const context = useAppContext();
+
   const [songState, setSongState] = useState<SongBarState>({
     player: undefined,
     isPlaying: false,
@@ -98,6 +104,7 @@ const SongBar: React.FC = () => {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
       rel: 0,
+      controls: 0,
       enablejsapi: 1
     },
   };
@@ -105,55 +112,58 @@ const SongBar: React.FC = () => {
   const [optState, setOptState] = useState<YouTubeProps>(opts);
 
   return (
-    <div className="songBar">
-      {/* Left section: Song Info */}
-      <div className="left">
-        <YouTube videoId="2g811Eo7K8U" iframeClassName="youtubePlayer" opts={optState} onPlay={onPlay} onPause={onPause} onReady={onPlayerReady} />
-        <div className="songInfo">
-          <div className="songTitle">Song Title</div>
-          <div className="artistName">Artist Name</div>
-        </div>
-      </div>
-
-      {/* Center section: Play/Pause and Navigation buttons */}
-      <div className="center">
-        <Button variant="link" className="controlButton" onClick={() => console.log('Previous song')}>
-          <RiSkipBackFill size={28} />
-        </Button>
-        
-        <Button variant="link" className="controlButton" onClick={togglePlayPause}>
-          {songState.isPlaying ? (
-            <FaPause size={28} />
-          ) : (
-            <FaPlay size={28} />
-          )}
-        </Button>
-        
-        <Button variant="link" className="controlButton" onClick={() => console.log('Next song')}>
-          <RiSkipForwardFill size={28} />
-        </Button>
-      </div>
-
-      {/* Right section: Volume control and progress bar */}
-      <div className="right">
-        {/* Volume control */}
-        <div className="volumeControl">
-          <Form.Range
-            min="0"
-            max="100"
-            value={songState.volume}
-            onChange={handleVolumeChange}
-            className="volumeSlider"
-          />
-          <span>{songState.volume}%</span>
+    <>
+    {context.isLoggedIn ? (
+      <div className="songBar">
+        {/* Left section: Song Info */}
+        <div className="left">
+          <YouTube videoId={context.currentSong} iframeClassName="youtubePlayer" opts={optState} onPlay={onPlay} onPause={onPause} onReady={onPlayerReady} />
+          <div className="songInfo">
+            <div className="songTitle">Song Title</div>
+            <div className="artistName">Artist Name</div>
+          </div>
         </div>
 
-        {/* Progress bar
-        <ProgressBar now={state.songProgress} label={`${state.songProgress}%`} className="progressBar" />
-      */}
-      </div>
-    </div>
-  );
-};
+        {/* Center section: Play/Pause and Navigation buttons */}
+        <div className="center">
+          <Button variant="link" className="controlButton" onClick={() => console.log('Previous song')}>
+            <RiSkipBackFill size={28} />
+          </Button>
+          
+          <Button variant="link" className="controlButton" onClick={togglePlayPause}>
+            {songState.isPlaying ? (
+              <FaPause size={28} />
+            ) : (
+              <FaPlay size={28} />
+            )}
+          </Button>
+          
+          <Button variant="link" className="controlButton" onClick={() => context.setCurrentSong("CvjRlYpXS5U")}>
+            <RiSkipForwardFill size={28} />
+          </Button>
+        </div>
 
+        {/* Right section: Volume control and progress bar */}
+        <div className="right">
+          {/* Volume control */}
+          <div className="volumeControl">
+            <Form.Range
+              min="0"
+              max="100"
+              value={songState.volume}
+              onChange={handleVolumeChange}
+              className="volumeSlider"
+            />
+            <span>{songState.volume}%</span>
+          </div>
+
+          {/* Progress bar
+          <ProgressBar now={state.songProgress} label={`${state.songProgress}%`} className="progressBar" />
+        */}
+        </div>
+      </div>
+      ) : null}
+    </>
+    );
+  };
 export default SongBar;
