@@ -2,8 +2,8 @@ import { Container, Form, Row } from "react-bootstrap"
 import {motion} from "motion/react"
 import "./Login.css"
 import { FcMusic } from "react-icons/fc";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Login:React.FC = () => {
 
@@ -14,26 +14,30 @@ const[loginCreds, setLoginCreds] = useState({
     password:""
 })
 
-useEffect(() => {
-    
-    document.documentElement.style.setProperty('--bs-border-radius','5px')
-    
-},[])
-
-
+//Store values from username and password form fields
 const storeValues = (input:any) => {
 
     const name = input.target.name
     const value = input.target.value
 
+    //updates loginCreds
     setLoginCreds((loginCreds) => ({...loginCreds, [name]:value}))
     
 
 }
 
+//Function that runs on log in button press/enter key press that sends an async login http request to backend
+//Will store logged in session in context
 const login = () => {
-
+    
     console.log(loginCreds)
+}
+
+//Handles enter keypresses on form fields, runs login function
+const handleKeyPress = (event: any) => {
+    if (event.key === "Enter"){
+        login();
+    }
 }
 
 return(
@@ -52,7 +56,8 @@ return(
                     placeholder ="Username" 
                     data-bs-theme = "dark"
                     name="username"
-                    onChange={storeValues}/>
+                    onChange={storeValues}
+                    onKeyDown={handleKeyPress}/>
                 </Form.Group>
                 <Form.Group>
                     <Form.Label className ="LoginLabel mb-0">Password</Form.Label>
@@ -61,7 +66,8 @@ return(
                     placeholder = "Password" 
                     data-bs-theme = "dark"
                     name="password"
-                    onChange={storeValues}/>
+                    onChange={storeValues}
+                    onKeyDown={handleKeyPress}/>
                 </Form.Group>
             </Form>
         </Row>
@@ -75,10 +81,11 @@ return(
             onClick={login}
             >Log in</motion.button>
             </Row>
+            <Row className="d-flex align-items-center">
+            <span>Don't have an account?</span>
+            <Link to="/register" className="ms-1" data-bs-theme="dark">Sign up here.</Link>
+            </Row>
     </Container>
-    
-
-    
     
 )
 

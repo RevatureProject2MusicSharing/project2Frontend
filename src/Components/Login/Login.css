@@ -2,9 +2,9 @@
 #LoginBox{
     display:flex;
     background-color:#121212;
-    padding:150px;
+    padding:100px;
     border-radius:15px;
-    row-gap:150px;
+    row-gap:100px;
     flex-direction: column;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     
@@ -38,6 +38,9 @@
   }
 button:hover{
     border-color:aliceblue;
+}
+span{
+    color:aliceblue
 }
 
 
