@@ -1,0 +1,8 @@
+.p-custom {
+  border: 2px solid rgb(159, 166, 178);
+  cursor: pointer;
+}
+
+.p-custom:hover {
+  border: 2px solid rgb(33, 45, 45);
+}
