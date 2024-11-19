@@ -47,7 +47,7 @@ return(
         <FcMusic id="icon" />
         <h1 className = "LoginText" id="LoginHeader">Login</h1>
         </Row>
-        <Row>
+        <Row id="formFieldRow">
             <Form>
                 <Form.Group>
                     <Form.Label className = "LoginLabel mb-0">Username</Form.Label>
@@ -71,7 +71,7 @@ return(
                 </Form.Group>
             </Form>
         </Row>
-            <Row>
+        <Row>
             <motion.button
             className="box"
             whileHover={{ scale: 1.1 }}
@@ -84,7 +84,7 @@ return(
             <Row className="d-flex align-items-center">
             <span>Don't have an account?</span>
             <Link to="/register" className="ms-1" data-bs-theme="dark">Sign up here.</Link>
-            </Row>
+        </Row>
     </Container>
     
 )

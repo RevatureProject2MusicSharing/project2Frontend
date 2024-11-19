@@ -1,16 +1,19 @@
 
 #LoginBox{
     display:flex;
-    background-color:#121212;
+    background-color:#1b1b1b;
     padding:100px;
     border-radius:15px;
-    row-gap:100px;
+    row-gap:10px;
     flex-direction: column;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
+    width:45%;
+    margin-bottom: 115px;
     
 }
 .LoginText{
     color: aliceblue;
+    margin-bottom:200px;
 }
 .LoginLabel{
     display:flex;
@@ -25,22 +28,28 @@
     scale: 3;
 }
 .box {
-    width: 200px;
+   
     height: 80px;
     border-radius: 50px;
     background-color: #1ed760;
     cursor: pointer;
     align-content:center;
-  }
-
-  #indexBody{
+    border-color:#017228;
+    scale:.8
+}
+#indexBody{
     background: linear-gradient(rgba(0, 0, 0, 0.808) 0%, rgb(0, 0, 0) 100%)
   }
 button:hover{
-    border-color:aliceblue;
+    border-color:rgb(175, 236, 193);
+    border-width:2px;
 }
 span{
     color:aliceblue
+}
+#formFieldRow{
+    width:300px;
+    align-self:center;
 }
 
 
