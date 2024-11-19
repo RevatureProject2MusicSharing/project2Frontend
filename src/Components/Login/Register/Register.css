@@ -1,0 +1,15 @@
+.container{
+    display:flex;
+    flex-direction: column;
+    background-color:#1b1b1b;
+    border-radius: 15px;
+    padding:100px;
+    width:45%;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    color:aliceblue;
+    
+}
+#indexBody{
+    height:100vh;
+    background:#121212;
+}
