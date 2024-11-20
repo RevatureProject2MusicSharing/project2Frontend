@@ -1,9 +1,9 @@
 import { Container, Form, Row } from "react-bootstrap"
 import {motion} from "motion/react"
 import "./Login.css"
-import { FcMusic } from "react-icons/fc";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { IoMusicalNotesSharp } from "react-icons/io5";
 
 export const Login:React.FC = () => {
 
@@ -43,8 +43,8 @@ return(
     
     <Container id="LoginBox">
         <Row id="header">
-        <FcMusic id="icon" />
-        <h1 className = "LoginText" id="LoginHeader">Login</h1>
+        <IoMusicalNotesSharp id="icon" />
+        <span className = "LoginText" id="LoginHeader">Log in to All In Audio</span>
         </Row>
         <Row id="formFieldRow">
             <Form>
