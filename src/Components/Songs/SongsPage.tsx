@@ -26,15 +26,20 @@ export const Songs: React.FC = () => {
         "genre": ""
     })
 
+    const [loadError, setLoadError] = useState<boolean>(false)
+
     // Function to get all songs
     const getSongs = async () => {
+        setLoadError(false)
         await axios.get("http://localhost:8080/songs")
         .then((res) => {
+            setLoadError(false)
             console.log(res.data)
             setSongs({songs: res.data})
         })
         .catch((err) => {
-            alert(err)
+            setLoadError(true)
+            console.log(err.message)
         })
     }
 
@@ -50,6 +55,7 @@ export const Songs: React.FC = () => {
                 getSongs()
             })
             .catch((err) => {
+                setLoadError(true)
                 alert(err.message)
             })
         }
@@ -77,6 +83,14 @@ export const Songs: React.FC = () => {
                 <Table style={{gap: "5px"}} className="">
                     <SongsList songs={songs}></SongsList>
                 </Table>
+
+                <div style={{marginBottom: "10px"}}>
+                    {loadError ?
+                    <div>
+                        <p>Songs could not be loaded.</p>
+                        <Button onClick={getSongs}>Refresh</Button>
+                    </div> : ""}
+                </div>
 
                 {/* Button for adding a new song */}
                 <Button style={{width: "100%"}} onClick={handleShow}>Add New Song</Button>
