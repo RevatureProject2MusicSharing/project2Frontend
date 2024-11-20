@@ -1,8 +1,8 @@
 import { Song } from "./Song"
-import { useState } from "react"
 import 'bootstrap/dist/css/bootstrap.css';
 import { Button } from "react-bootstrap";
 import { FaPause, FaPlay } from "react-icons/fa";
+import { useAppContext } from "../AppContext/AppContext";
 
 type SongInfo = {
     songId: number,
@@ -15,13 +15,27 @@ type SongList = {
     songs: SongInfo[]
 }
 
+// Regex to get youtube ids
+const regex = /(?:[?&]vi?=|\/embed\/|\/\d\d?\/|\/vi?\/|https?:\/\/(?:www\.)?youtu\.be\/)([A-Za-z0-9_\\-]{11})/
+
+// Uses regex to get the youtube link id
+function getYouTubeId(str: string) {
+    const result = regex.exec(str)
+    let matchedString = null                    
+
+    if (result) {
+        matchedString = result[1]
+    }
+
+    return matchedString
+}
+
 export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
+
+    const context = useAppContext();
 
     // Storing the list of songs
     const songList = songs.songs
-
-    // State for the currently playing song
-    const [playingSong, setPlayingSong] = useState(0)
     
     return (
         <>
@@ -38,18 +52,36 @@ export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
             {/* Table body */}
             <tbody>
                 {songList.map((song: SongInfo) => {
+                    const youtubeId = getYouTubeId(song.youtubeLink)
+
                     // If the song is playing, show the pause button, else show the play button
-                    if (playingSong === song.songId) {
+                    if (youtubeId && context.currentSong === youtubeId) {
                         return (
                             <tr style={{gap: "5px", padding: "5px"}} className="border rounded w-100">
                                 <td style={{textAlign: "left"}}>
                                     <Button
                                         className="rounded-circle"
                                         onClick={() => {
-                                            setPlayingSong(0)
+                                            context.setCurrentSong("")
                                         }}
                                     >
                                         <FaPause />
+                                    </Button>
+                                </td>
+                                <Song key={song.songId} song={song}></Song>
+                            </tr>
+                        )
+                    } else if (youtubeId) {
+                        return (
+                            <tr style={{gap: "5px", padding: "5px"}} className="border rounded w-100">
+                                <td style={{textAlign: "left"}}>
+                                    <Button
+                                        className="rounded-circle"
+                                        onClick={() => {
+                                            context.setCurrentSong(youtubeId)
+                                        }}
+                                    >
+                                        <FaPlay />
                                     </Button>
                                 </td>
                                 <Song key={song.songId} song={song}></Song>
@@ -62,7 +94,7 @@ export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
                                     <Button
                                         className="rounded-circle"
                                         onClick={() => {
-                                            setPlayingSong(song.songId)
+                                            context.setCurrentSong("")
                                         }}
                                     >
                                         <FaPlay />
