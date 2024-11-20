@@ -57,7 +57,7 @@ export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
                     // If the song is playing, show the pause button, else show the play button
                     if (youtubeId && context.currentSong === youtubeId) {
                         return (
-                            <tr style={{gap: "5px", padding: "5px"}} className="border rounded w-100">
+                            <tr key={song.songId} style={{gap: "5px", padding: "5px"}} className="border rounded w-100">
                                 <td style={{textAlign: "left"}}>
                                     <Button
                                         className="rounded-circle"
@@ -73,7 +73,7 @@ export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
                         )
                     } else if (youtubeId) {
                         return (
-                            <tr style={{gap: "5px", padding: "5px"}} className="border rounded w-100">
+                            <tr key={song.songId} style={{gap: "5px", padding: "5px"}} className="border rounded w-100">
                                 <td style={{textAlign: "left"}}>
                                     <Button
                                         className="rounded-circle"
@@ -89,7 +89,7 @@ export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
                         )
                     } else {
                         return (
-                            <tr style={{gap: "5px", padding: "5px"}} className="border rounded w-100">
+                            <tr key={song.songId} style={{gap: "5px", padding: "5px"}} className="border rounded w-100">
                                 <td style={{textAlign: "left"}}>
                                     <Button
                                         className="rounded-circle"
