@@ -33,7 +33,6 @@ export const Songs: React.FC = () => {
         setLoadError(false)
         await axios.get("http://localhost:8080/songs")
         .then((res) => {
-            setLoadError(false)
             console.log(res.data)
             setSongs({songs: res.data})
         })
@@ -55,7 +54,6 @@ export const Songs: React.FC = () => {
                 getSongs()
             })
             .catch((err) => {
-                setLoadError(true)
                 alert(err.message)
             })
         }
@@ -87,7 +85,7 @@ export const Songs: React.FC = () => {
                 <div style={{marginBottom: "10px"}}>
                     {loadError ?
                     <div>
-                        <p>Songs could not be loaded.</p>
+                        <p style={{color: "red"}}>Songs could not be loaded.</p>
                         <Button onClick={getSongs}>Refresh</Button>
                     </div> : ""}
                 </div>
