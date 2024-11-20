@@ -43,6 +43,7 @@ export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
             <thead>
                 <tr>
                     <th></th>
+                    <th>Song Thumbnail</th>
                     <th>Song Name</th>
                     <th>Song Genre</th>
                     <th></th>
@@ -57,10 +58,10 @@ export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
                     // If the song is playing, show the pause button, else show the play button
                     if (youtubeId && context.currentSong === youtubeId) {
                         return (
-                            <tr key={song.songId} style={{gap: "5px", padding: "5px"}} className="border rounded w-100">
-                                <td style={{textAlign: "left"}}>
+                            <tr key={song.songId} style={{gap: "5px", padding: "5px"}} className="rounded w-100">
+                                <td className="text-center align-middle" style={{textAlign: "left"}}>
                                     <Button
-                                        className="rounded-circle"
+                                        className="rounded-circle btn-success"
                                         onClick={() => {
                                             context.setCurrentSong("")
                                         }}
@@ -68,15 +69,18 @@ export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
                                         <FaPause />
                                     </Button>
                                 </td>
+                                <td className="text-center align-middle">
+                                    <img src={`https://img.youtube.com/vi/${youtubeId}/default.jpg`}></img>
+                                </td>
                                 <Song key={song.songId} song={song}></Song>
                             </tr>
                         )
                     } else if (youtubeId) {
                         return (
-                            <tr key={song.songId} style={{gap: "5px", padding: "5px"}} className="border rounded w-100">
-                                <td style={{textAlign: "left"}}>
+                            <tr key={song.songId} style={{gap: "5px", padding: "5px"}} className="rounded w-100 h-100">
+                                <td className="text-center align-middle" style={{textAlign: "left"}}>
                                     <Button
-                                        className="rounded-circle"
+                                        className="rounded-circle btn-success"
                                         onClick={() => {
                                             context.setCurrentSong(youtubeId)
                                         }}
@@ -84,21 +88,27 @@ export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
                                         <FaPlay />
                                     </Button>
                                 </td>
+                                <td className="text-center align-middle">
+                                    <img src={`https://img.youtube.com/vi/${youtubeId}/default.jpg`}></img>
+                                </td>
                                 <Song key={song.songId} song={song}></Song>
                             </tr>
                         )
                     } else {
                         return (
-                            <tr key={song.songId} style={{gap: "5px", padding: "5px"}} className="border rounded w-100">
-                                <td style={{textAlign: "left"}}>
+                            <tr key={song.songId} style={{gap: "5px", padding: "5px"}} className="rounded w-100">
+                                <td className="text-center align-middle" style={{textAlign: "left"}}>
                                     <Button
-                                        className="rounded-circle"
+                                        className="rounded-circle btn-success"
                                         onClick={() => {
                                             context.setCurrentSong("")
                                         }}
                                     >
                                         <FaPlay />
                                     </Button>
+                                </td>
+                                <td className="text-center align-middle">
+                                    <img src={`https://img.youtube.com/vi/${youtubeId}/default.jpg`}></img>
                                 </td>
                                 <Song key={song.songId} song={song}></Song>
                             </tr>

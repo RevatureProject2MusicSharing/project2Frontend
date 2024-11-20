@@ -73,12 +73,12 @@ export const Songs: React.FC = () => {
 
     return (
         <>
-            <Container>
+            <Container style={{padding: "25px", width: "100vw"}}>
                 {/* Header */}
                 <h1 style={{textAlign: "left"}}>Songs</h1>
 
                 {/* Table for list of songs */}
-                <Table style={{gap: "5px"}} className="">
+                <Table style={{gap: "5px"}} className="table table-dark">
                     <SongsList songs={songs}></SongsList>
                 </Table>
 
@@ -86,17 +86,17 @@ export const Songs: React.FC = () => {
                     {loadError ?
                     <div>
                         <p style={{color: "red"}}>Songs could not be loaded.</p>
-                        <Button onClick={getSongs}>Refresh</Button>
+                        <Button className="btn-success" onClick={getSongs}>Refresh</Button>
                     </div> : ""}
                 </div>
 
                 {/* Button for adding a new song */}
-                <Button style={{width: "100%"}} onClick={handleShow}>Add New Song</Button>
+                <Button variant="success" style={{width: "100%"}} onClick={handleShow}>Add New Song</Button>
             
                 {/* Modal for adding a new song */}
-                <Modal show={show} onHide={handleClose}>
+                <Modal data-bs-theme="dark" show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Add New Song</Modal.Title>
+                        <Modal.Title style={{color: "white"}}>Add New Song</Modal.Title>
                     </Modal.Header>
                     <Modal.Body style={{gap: "5px"}} className="d-flex flex-column">
                         <Form.Control
@@ -124,7 +124,7 @@ export const Songs: React.FC = () => {
                         <Button variant="secondary" onClick={handleClose}>
                             Close
                         </Button>
-                        <Button variant="primary" onClick={handleAddSongs}>
+                        <Button variant="success" onClick={handleAddSongs}>
                             Add New Song
                         </Button>
                     </Modal.Footer>
