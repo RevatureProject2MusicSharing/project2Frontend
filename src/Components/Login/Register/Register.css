@@ -11,5 +11,5 @@
 }
 #indexBody{
     height:100vh;
-    background:#121212;
+    background: linear-gradient(rgba(0, 0, 0, 0.808) 0%, rgb(0, 0, 0) 100%);
 }

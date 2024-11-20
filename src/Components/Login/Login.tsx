@@ -3,11 +3,10 @@ import {motion} from "motion/react"
 import "./Login.css"
 import { FcMusic } from "react-icons/fc";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Login:React.FC = () => {
 
-const navigate = useNavigate()
 
 const[loginCreds, setLoginCreds] = useState({
     username:"",
