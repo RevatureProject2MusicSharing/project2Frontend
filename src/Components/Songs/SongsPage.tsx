@@ -51,9 +51,9 @@ export const Songs: React.FC = () => {
     }
 
     // Function to get all songs
-    const getSongs = async () => {
+    const getSongs = async (jwt: string) => {
         setLoadError(false)
-        await axios.get("http://localhost:8080/songs")
+        await axios({method: 'get', url: "http://localhost:8080/songs", headers: {"Authorization": "Bearer" + jwt}})
         .then((res) => {
             console.log(res.data)
             setSongs({songs: res.data})
@@ -88,9 +88,24 @@ export const Songs: React.FC = () => {
         setSong((song) => ({...song, [name]: value}))
     }
 
+    const login = async () => {
+        await axios.post("http://localhost:8080/login", {
+                "username": "Harry",
+                "password": "password"
+            })
+            .then((res) => {
+                console.log(res)
+                console.log("hey i made it")
+                getSongs(res.data.jwt)
+            })
+            .catch((err) => {
+                alert(err.message)
+            })
+    }
+
     // useEffect to trigger getSongs() on component load
     useEffect(() => {
-        getSongs()
+        login()
     }, [])
 
     return (
@@ -100,7 +115,7 @@ export const Songs: React.FC = () => {
                 <h1 style={{textAlign: "left"}}>Songs</h1>
 
                 {/* Table for list of songs */}
-                <Table style={{gap: "5px"}} className="table table-dark">
+                <Table style={{gap: "5px"}} className="table table-dark table-hover">
                     <SongsList songs={songs}></SongsList>
                 </Table>
 
