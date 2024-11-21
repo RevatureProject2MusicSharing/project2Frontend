@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Button } from "react-bootstrap";
 import { FaPause, FaPlay } from "react-icons/fa";
 import { useAppContext } from "../AppContext/AppContext";
+import { getYouTubeId } from "../../utils/Utils";
 
 type SongInfo = {
     songId: number,
@@ -15,24 +16,9 @@ type SongList = {
     songs: SongInfo[]
 }
 
-// Regex to get youtube ids
-const regex = /(?:[?&]vi?=|\/embed\/|\/\d\d?\/|\/vi?\/|https?:\/\/(?:www\.)?youtu\.be\/)([A-Za-z0-9_\\-]{11})/
-
-// Uses regex to get the youtube link id
-function getYouTubeId(str: string) {
-    const result = regex.exec(str)
-    let matchedString = null                    
-
-    if (result) {
-        matchedString = result[1]
-    }
-
-    return matchedString
-}
-
 export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
 
-    const context = useAppContext();
+    const context = useAppContext()
 
     // Storing the list of songs
     const songList = songs.songs
@@ -63,7 +49,7 @@ export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
                                     <Button
                                         className="rounded-circle btn-success"
                                         onClick={() => {
-                                            context.setCurrentSong("")
+                                            
                                         }}
                                     >
                                         <FaPause />

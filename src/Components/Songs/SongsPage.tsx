@@ -4,9 +4,15 @@ import { SongsList } from "./SongList"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import 'bootstrap/dist/css/bootstrap.css';
+import { motion } from "motion/react";
+import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
+import { useAppContext } from "../AppContext/AppContext";
+import { getYouTubeId } from "../../utils/Utils";
 
 export const Songs: React.FC = () => {
     
+    const context = useAppContext()
+
     // State for showing/hiding add song modal
     const [show, setShow] = useState(false);
 
@@ -27,6 +33,22 @@ export const Songs: React.FC = () => {
     })
 
     const [loadError, setLoadError] = useState<boolean>(false)
+
+    // Function to set the current song to a random song
+    const getRandomSong = async () => {
+        setLoadError(false)
+        await axios.get("http://localhost:8080/songs/random")
+        .then((res) => {
+            const youtubeId = getYouTubeId(res.data.youtubeLink)
+            if (youtubeId) {
+                context.setCurrentSong(youtubeId)
+            }
+        })
+        .catch((err) => {
+            setLoadError(true)
+            console.log(err.message)
+        })
+    }
 
     // Function to get all songs
     const getSongs = async () => {
@@ -91,7 +113,27 @@ export const Songs: React.FC = () => {
                 </div>
 
                 {/* Button for adding a new song */}
-                <Button variant="success" style={{width: "100%"}} onClick={handleShow}>Add New Song</Button>
+                <motion.button
+                    style={{width: "80%", marginBottom: "5px"}}
+                    className="btn btn-success mx-auto"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    onClick={handleShow}
+                >
+                    Add New Song
+                </motion.button>
+
+                <motion.button
+                    style={{width: "80%"}}
+                    className="btn btn-success mx-auto"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    onClick={getRandomSong}
+                >
+                    <GiPerspectiveDiceSixFacesRandom /> Play Random Song <GiPerspectiveDiceSixFacesRandom />
+                </motion.button>
             
                 {/* Modal for adding a new song */}
                 <Modal data-bs-theme="dark" show={show} onHide={handleClose}>
