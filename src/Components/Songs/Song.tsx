@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Button, Dropdown, DropdownButton, Form, Modal } from "react-bootstrap"
 import 'bootstrap/dist/css/bootstrap.css';
+import { FaCog } from "react-icons/fa";
 
 type SongInfo = {
     songId: number,
@@ -46,11 +47,11 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
                 <>
                     {/* Song information */}
                     {/* <td>{songInfo.songId}</td> */}
-                    <td>{songInfo.songName}</td>
+                    <td className="text-center align-middle">{songInfo.songName}</td>
                     {/* <td>{songInfo.youtubeLink}</td> */}
-                    <td>{songInfo.genre}</td>
-                    <td style={{textAlign: "right"}}>
-                        <DropdownButton id="dropdown-basic-button" title="Options">
+                    <td className="text-center align-middle">{songInfo.genre}</td>
+                    <td className="text-center align-middle" style={{textAlign: "right"}}>
+                        <DropdownButton data-bs-theme="dark" variant="success" id="dropdown-basic-button" title={<FaCog />}>
                             <Dropdown.Item onClick={handleShow}>Add to Playlist</Dropdown.Item>
                             <Dropdown.Item onClick={handleDelete}>Delete Song</Dropdown.Item>
                         </DropdownButton>
@@ -58,9 +59,9 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
 
 
                     {/* Modal for Adding to Playlist */}
-                    <Modal show={show} onHide={handleClose}>
+                    <Modal data-bs-theme="dark" show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Add "{songInfo.songName}" to Playlist</Modal.Title>
+                            <Modal.Title style={{color: "white"}}>Add "{songInfo.songName}" to Playlist</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <Form.Select>
@@ -74,7 +75,7 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
                             <Button variant="secondary" onClick={handleClose}>
                                 Close
                             </Button>
-                            <Button variant="primary" onClick={handleClose}>
+                            <Button variant="success" onClick={handleClose}>
                                 Add
                             </Button>
                         </Modal.Footer>

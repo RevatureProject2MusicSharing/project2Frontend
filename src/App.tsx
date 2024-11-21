@@ -20,7 +20,7 @@ function App() {
             <Route path="/songs" element ={<Songs/>} />
           </Routes>
         </BrowserRouter>
-        
+        <SongBar/>
     </AppProvider>
   )
 }

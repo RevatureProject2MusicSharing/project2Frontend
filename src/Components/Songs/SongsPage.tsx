@@ -4,9 +4,15 @@ import { SongsList } from "./SongList"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import 'bootstrap/dist/css/bootstrap.css';
+import { motion } from "motion/react";
+import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
+import { useAppContext } from "../AppContext/AppContext";
+import { getYouTubeId } from "../../utils/Utils";
 
 export const Songs: React.FC = () => {
     
+    const context = useAppContext()
+
     // State for showing/hiding add song modal
     const [show, setShow] = useState(false);
 
@@ -26,15 +32,35 @@ export const Songs: React.FC = () => {
         "genre": ""
     })
 
+    const [loadError, setLoadError] = useState<boolean>(false)
+
+    // Function to set the current song to a random song
+    const getRandomSong = async () => {
+        setLoadError(false)
+        await axios.get("http://localhost:8080/songs/random")
+        .then((res) => {
+            const youtubeId = getYouTubeId(res.data.youtubeLink)
+            if (youtubeId) {
+                context.setCurrentSong(youtubeId)
+            }
+        })
+        .catch((err) => {
+            setLoadError(true)
+            console.log(err.message)
+        })
+    }
+
     // Function to get all songs
     const getSongs = async () => {
+        setLoadError(false)
         await axios.get("http://localhost:8080/songs")
         .then((res) => {
             console.log(res.data)
             setSongs({songs: res.data})
         })
         .catch((err) => {
-            alert(err)
+            setLoadError(true)
+            console.log(err.message)
         })
     }
 
@@ -69,22 +95,50 @@ export const Songs: React.FC = () => {
 
     return (
         <>
-            <Container>
+            <Container style={{padding: "25px", width: "100vw"}}>
                 {/* Header */}
                 <h1 style={{textAlign: "left"}}>Songs</h1>
 
                 {/* Table for list of songs */}
-                <Table style={{gap: "5px"}} className="">
+                <Table style={{gap: "5px"}} className="table table-dark">
                     <SongsList songs={songs}></SongsList>
                 </Table>
 
+                <div style={{marginBottom: "10px"}}>
+                    {loadError ?
+                    <div>
+                        <p style={{color: "red"}}>Songs could not be loaded.</p>
+                        <Button className="btn-success" onClick={getSongs}>Refresh</Button>
+                    </div> : ""}
+                </div>
+
                 {/* Button for adding a new song */}
-                <Button style={{width: "100%"}} onClick={handleShow}>Add New Song</Button>
+                <motion.button
+                    style={{width: "80%", marginBottom: "5px"}}
+                    className="btn btn-success mx-auto"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    onClick={handleShow}
+                >
+                    Add New Song
+                </motion.button>
+
+                <motion.button
+                    style={{width: "80%"}}
+                    className="btn btn-success mx-auto"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    onClick={getRandomSong}
+                >
+                    <GiPerspectiveDiceSixFacesRandom /> Play Random Song <GiPerspectiveDiceSixFacesRandom />
+                </motion.button>
             
                 {/* Modal for adding a new song */}
-                <Modal show={show} onHide={handleClose}>
+                <Modal data-bs-theme="dark" show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Add New Song</Modal.Title>
+                        <Modal.Title style={{color: "white"}}>Add New Song</Modal.Title>
                     </Modal.Header>
                     <Modal.Body style={{gap: "5px"}} className="d-flex flex-column">
                         <Form.Control
@@ -112,7 +166,7 @@ export const Songs: React.FC = () => {
                         <Button variant="secondary" onClick={handleClose}>
                             Close
                         </Button>
-                        <Button variant="primary" onClick={handleAddSongs}>
+                        <Button variant="success" onClick={handleAddSongs}>
                             Add New Song
                         </Button>
                     </Modal.Footer>
