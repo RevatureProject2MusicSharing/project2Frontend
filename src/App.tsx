@@ -17,9 +17,10 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element ={<Register/>} />
+            <Route path="/songs" element ={<Songs/>} />
           </Routes>
         </BrowserRouter>
-        
+        <SongBar/>
     </AppProvider>
   )
 }
