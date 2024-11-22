@@ -2,12 +2,12 @@
 #LoginBox{
     display:flex;
     background-color:#1b1b1b;
-    padding:100px;
+    padding:75px;
     border-radius:15px;
     row-gap:10px;
     flex-direction: column;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-    width:50%;
+    width:fit-content
     
     
 }

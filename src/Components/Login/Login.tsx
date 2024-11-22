@@ -4,9 +4,12 @@ import "./Login.css"
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoMusicalNotesSharp } from "react-icons/io5";
+import axios from "axios";
+import {useAppContext} from "../AppContext/AppContext"
 
 export const Login:React.FC = () => {
 
+const context = useAppContext();
 
 const[loginCreds, setLoginCreds] = useState({
     username:"",
@@ -27,15 +30,24 @@ const storeValues = (input:any) => {
 
 //Function that runs on log in button press/enter key press that sends an async login http request to backend
 //Will store logged in session in context
-const login = () => {
+const handleLogin = async () => {
     
+    const response = await axios.post("http://localhost:8080/login", loginCreds)
+    .then(
+
+        (response) => {
+            const jwt = response.data.jwt
+            console.log(jwt)
+        }
+    )
+
     console.log(loginCreds)
 }
 
 //Handles enter keypresses on form fields, runs login function
 const handleKeyPress = (event: any) => {
     if (event.key === "Enter"){
-        login();
+        handleLogin();
     }
 }
 
@@ -77,7 +89,7 @@ return(
             whileTap={{ scale: 0.9 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }
             }
-            onClick={login}
+            onClick={handleLogin}
             >Log in</motion.button>
             </Row>
             <Row className="d-flex align-items-center">

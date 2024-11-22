@@ -3,13 +3,16 @@
     flex-direction: column;
     background-color:#1b1b1b;
     border-radius: 15px;
-    padding:100px;
-    width:45%;
+    padding:75px;
+    width:fit-content;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     color:aliceblue;
-    
+   
 }
 #indexBody{
     height:100vh;
     background: linear-gradient(rgba(0, 0, 0, 0.808) 0%, rgb(0, 0, 0) 100%);
+}
+.warning{
+    color:#ed2c3f
 }
