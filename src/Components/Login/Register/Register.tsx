@@ -31,7 +31,7 @@ export const Register:React.FC = () => {
         //TODO: check if username is already exists in DB before sending post request.
         
         //post request for registering user
-        const response = await axios.post("http://localhost:8080/users", user)
+        const response = await axios.post("http://localhost:8080/register", user)
         .then(() => {setIsRegistered(true)}) //on successful post request change state of isRegistered
         .catch((error) => {alert("Failed! " + error.message)})
     }
