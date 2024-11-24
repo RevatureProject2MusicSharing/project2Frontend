@@ -2,12 +2,15 @@ import { Col, Container, Form, Row } from "react-bootstrap"
 import {motion} from "motion/react"
 import "./Login.css"
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { IoMusicalNotesSharp } from "react-icons/io5";
 import axios from "axios";
-import {useAppContext} from "../AppContext/AppContext"
+import { useAppContext } from "../AppContext/AppContext";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 import { PiWarningCircleLight } from "react-icons/pi";
 import { GiPokerHand } from "react-icons/gi";
+
+
 
 export const Login:React.FC = () => {
 
@@ -32,31 +35,28 @@ const storeValues = (input:any) => {
 
 }
 
-//Function that runs on log in button press/enter key press that sends an async login http request to backend
-//Will store logged in session in context
-const handleLogin = async () => {
-    
-    const response = await axios.post("http://localhost:8080/login", loginCreds)
-    .then(
+const login = async (loginCreds: any) => {
+    try {
+        // Post request for registering the user
+        const response = await axios.post("http://localhost:8080/login", loginCreds);
 
-        (response) => {
-            const jwt = response.data.jwt
-            console.log(jwt)
-            navigate("/songs")
-        }
-    
-    )
-    .catch(
-      (error) =>  {setInvalidLogin(true)}
-    )
+        // Extract the JWT from the response body
+        const jwt = response.data.jwt; // .data is where axios stores the response body
 
-    console.log(loginCreds)
-}
+        // Use the context and navigate
+        context.login();
+        Cookies.set('jwt', jwt, { path: '/', expires: 1, secure: false, sameSite: 'Strict' });
+        navigate("/songs");
+
+    } catch (error) {
+        alert("Failed! " + error);
+    }
+};
 
 //Handles enter keypresses on form fields, runs login function
-const handleKeyPress = (event: any) => {
+const handleKeyPress = async (event: any) => {
     if (event.key === "Enter"){
-        handleLogin();
+        await login(loginCreds);
     }
 }
 
@@ -102,7 +102,7 @@ return(
             whileTap={{ scale: 0.9 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }
             }
-            onClick={handleLogin}
+            onClick={() => login(loginCreds)}
             >Log in</motion.button>
             </Row>
             <Row className="d-flex align-items-center">
@@ -110,10 +110,5 @@ return(
             <Link to="/register" className="ms-1" data-bs-theme="dark">Sign up here.</Link>
         </Row>
     </Container>
-    
-)
-
-
-
-
+    )
 }
