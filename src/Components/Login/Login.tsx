@@ -1,15 +1,19 @@
-import { Container, Form, Row } from "react-bootstrap"
+import { Col, Container, Form, Row } from "react-bootstrap"
 import {motion} from "motion/react"
 import "./Login.css"
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoMusicalNotesSharp } from "react-icons/io5";
 import axios from "axios";
 import {useAppContext} from "../AppContext/AppContext"
+import { PiWarningCircleLight } from "react-icons/pi";
+import { GiPokerHand } from "react-icons/gi";
 
 export const Login:React.FC = () => {
 
 const context = useAppContext();
+const navigate = useNavigate();
+const[invalidLogin, setInvalidLogin] = useState(false);
 
 const[loginCreds, setLoginCreds] = useState({
     username:"",
@@ -38,7 +42,12 @@ const handleLogin = async () => {
         (response) => {
             const jwt = response.data.jwt
             console.log(jwt)
+            navigate("/songs")
         }
+    
+    )
+    .catch(
+      (error) =>  {setInvalidLogin(true)}
     )
 
     console.log(loginCreds)
@@ -55,8 +64,12 @@ return(
     
     <Container id="LoginBox">
         <Row id="header">
-        <IoMusicalNotesSharp id="icon" />
+        
+        <GiPokerHand id="icon" />
         <span className = "LoginText" id="LoginHeader">Log in to All In Audio</span>
+        <Col>
+        {invalidLogin ? (<><PiWarningCircleLight className = "warning" /><span className = "warning">Invalid credentials.</span></>):(<></>)}
+        </Col>
         </Row>
         <Row id="formFieldRow">
             <Form>

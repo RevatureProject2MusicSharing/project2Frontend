@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Register } from './Components/Login/Register/Register';
 import SongBar from './Components/SongBar/SongBar'
 import { AppProvider } from './Components/AppContext/AppContext'
+import { User } from './Components/User/User'
 
 function App() {
 
@@ -18,9 +19,10 @@ function App() {
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element ={<Register/>} />
             <Route path="/songs" element ={<Songs/>} />
+            <Route path="/users" element = {<User/>}></Route>
           </Routes>
         </BrowserRouter>
-        <SongBar/>
+        {/* <SongBar/> */}
     </AppProvider>
   )
 }

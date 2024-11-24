@@ -4,9 +4,10 @@
     background-color:#1b1b1b;
     border-radius: 15px;
     padding:75px;
-    width:fit-content;
+    width:30vw;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     color:aliceblue;
+    height: 75vh;
    
 }
 #indexBody{
