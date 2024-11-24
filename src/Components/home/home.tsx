@@ -6,7 +6,9 @@ import { motion, useScroll, Variants } from 'motion/react'
 import { GiPokerHand } from "react-icons/gi";
 import { Button } from 'react-bootstrap';
 import { CardComponent } from './CardComponent';
+import { useNavigate } from 'react-router-dom';
 function Home() {
+  const navigate = useNavigate()
   return (
     <>
 
@@ -20,7 +22,7 @@ function Home() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             transition={{ type: "spring", stiffness: 500, damping: 10 }}>
-          <Button  variant="success">
+          <Button  variant="success" onClick={()=>navigate("/login")} >
               Get Started
           </Button>
           </motion.div>
