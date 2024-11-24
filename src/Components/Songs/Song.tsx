@@ -31,6 +31,9 @@ export const Song: React.FC<{song: SongInfo, playing: boolean}> = ({song, playin
         "artistName": song.artistName
     })
 
+    // State for storing Playlist ID to add to
+    const [playlistID, setPlaylistID] = useState<number>(0)
+
     // Temporary state for storing JWT
     const [jwt, setJwt] = useState("")
 
@@ -60,6 +63,20 @@ export const Song: React.FC<{song: SongInfo, playing: boolean}> = ({song, playin
         const value = input.target.value
 
         setCurrentSong((currentSong) => ({...currentSong, [name]: value}))
+    }
+
+    const handleAddToPlaylist = async () => {
+        if (playlistID === null || playlistID < 1) {
+            console.log("invalid")
+        } else {
+            await axios.post("http://localhost:8080/playlists/" + playlistID, {songid: song.songId}, { headers: {"Authorization": "Bearer " + jwt} })
+            .then(() => {
+                setVersion((prevState) => prevState++)
+            })
+            .catch((err) => {
+                alert(err.message)
+            })
+        }
     }
 
     // Function to edit songs
@@ -229,18 +246,31 @@ export const Song: React.FC<{song: SongInfo, playing: boolean}> = ({song, playin
                             <Modal.Title style={{color: "white"}}>Add "{currentSong.songName}" to Playlist</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <Form.Select>
-                                <option disabled>Choose Playlist</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </Form.Select>
+                            <Form.Control
+                                type="number"
+                                placeholder="1"
+                                name="playlistID"
+                                onChange={(input) => {
+                                    const num = Number(input.target.value)
+
+                                    if (num > 0) {
+                                        setPlaylistID(Number(input.target.value))
+                                    }
+                                }}
+                                value={playlistID}
+                            />
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClosePlaylistModal}>
                                 Close
                             </Button>
-                            <Button variant="success" onClick={handleClosePlaylistModal}>
+                            <Button
+                                variant="success"
+                                onClick={() => {
+                                    handleClosePlaylistModal()
+                                    handleAddToPlaylist()
+                                }}
+                            >
                                 Add
                             </Button>
                         </Modal.Footer>
