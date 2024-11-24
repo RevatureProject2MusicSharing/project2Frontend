@@ -13,6 +13,9 @@ export const Songs: React.FC = () => {
     
     const context = useAppContext()
 
+    // Temporary state for storing JWT
+    const [jwt, setJwt] = useState("")
+
     // State for showing/hiding add song modal
     const [show, setShow] = useState(false);
 
@@ -29,7 +32,8 @@ export const Songs: React.FC = () => {
     const [song, setSong] = useState({
         "songName": "",
         "youtubeLink": "",
-        "genre": ""
+        "genre": "",
+        "artistName": ""
     })
 
     const [loadError, setLoadError] = useState<boolean>(false)
@@ -37,7 +41,8 @@ export const Songs: React.FC = () => {
     // Function to set the current song to a random song
     const getRandomSong = async () => {
         setLoadError(false)
-        await axios.get("http://localhost:8080/songs/random")
+        context.setCurrentSong("")
+        await axios.get("http://localhost:8080/songs/random", { headers: {"Authorization": "Bearer " + jwt} })
         .then((res) => {
             const youtubeId = getYouTubeId(res.data.youtubeLink)
             if (youtubeId) {
@@ -51,11 +56,11 @@ export const Songs: React.FC = () => {
     }
 
     // Function to get all songs
-    const getSongs = async () => {
+    const getSongs = async (token: string) => {
         setLoadError(false)
-        await axios.get("http://localhost:8080/songs")
+        await axios({method: 'get', url: "http://localhost:8080/songs", headers: {"Authorization": "Bearer " + token}})
         .then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
             setSongs({songs: res.data})
         })
         .catch((err) => {
@@ -66,14 +71,14 @@ export const Songs: React.FC = () => {
 
     // Function to add songs
     const handleAddSongs = async () => {
-        if (song.songName === "" || song.youtubeLink === "" || song.genre === "") {
+        if (song.songName === "" || song.youtubeLink === "" || song.genre === "" || song.artistName === "") {
             console.log("invalid")
         } else {
-            console.log(song)
-            await axios.post("http://localhost:8080/songs", song)
-            .then((res) => {
-                console.log(res)
-                getSongs()
+            // console.log(song)
+            await axios.post("http://localhost:8080/songs", song, { headers: {"Authorization": "Bearer " + jwt} })
+            .then(() => {
+                // console.log(res)
+                getSongs(jwt)
             })
             .catch((err) => {
                 alert(err.message)
@@ -88,9 +93,27 @@ export const Songs: React.FC = () => {
         setSong((song) => ({...song, [name]: value}))
     }
 
+    const login = async () => {
+        await axios.post("http://localhost:8080/login", {
+                "username": "Michael",
+                "password": "password"
+            })
+            .then((res) => {
+                // console.log(res)
+                // console.log("hey i made it")
+                setJwt(res.data.jwt)
+
+                // Pass getSongs the jwt since the state hasn't updated yet
+                getSongs(res.data.jwt)
+            })
+            .catch((err) => {
+                alert(err.message)
+            })
+    }
+
     // useEffect to trigger getSongs() on component load
     useEffect(() => {
-        getSongs()
+        login()
     }, [])
 
     return (
@@ -100,7 +123,7 @@ export const Songs: React.FC = () => {
                 <h1 style={{textAlign: "left"}}>Songs</h1>
 
                 {/* Table for list of songs */}
-                <Table style={{gap: "5px"}} className="table table-dark">
+                <Table style={{gap: "5px"}} className="table table-dark table-hover">
                     <SongsList songs={songs}></SongsList>
                 </Table>
 
@@ -108,7 +131,7 @@ export const Songs: React.FC = () => {
                     {loadError ?
                     <div>
                         <p style={{color: "red"}}>Songs could not be loaded.</p>
-                        <Button className="btn-success" onClick={getSongs}>Refresh</Button>
+                        <Button className="btn-success" onClick={() => { getSongs(jwt) }}>Refresh</Button>
                     </div> : ""}
                 </div>
 
@@ -141,17 +164,25 @@ export const Songs: React.FC = () => {
                         <Modal.Title style={{color: "white"}}>Add New Song</Modal.Title>
                     </Modal.Header>
                     <Modal.Body style={{gap: "5px"}} className="d-flex flex-column">
+
+                        <Form.Control
+                            type="text"
+                            placeholder="youtube link"
+                            name="youtubeLink"
+                            onChange={storeValues}
+                        />
+
                         <Form.Control
                             type="text"
                             placeholder="song name"
                             name="songName"
                             onChange={storeValues}
                         />
-
+                        
                         <Form.Control
                             type="text"
-                            placeholder="youtube link"
-                            name="youtubeLink"
+                            placeholder="artist name"
+                            name="artistName"
                             onChange={storeValues}
                         />
 
