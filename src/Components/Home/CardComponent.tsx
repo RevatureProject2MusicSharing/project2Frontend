@@ -51,7 +51,7 @@ export const CardComponent:React.FC = () => {
         );
       }
       
-      const food: [string, number, number, number][] = [
+      const card: [string, number, number, number][] = [
         ["Features", 340, 10, 80],
         ["Robust Login System", 20, 40, 50],
         ["Secure Login Using JWT", 60, 90, 50],
@@ -65,8 +65,8 @@ export const CardComponent:React.FC = () => {
     return(
         <>
         
-          <div className='hide' style={{ height: '400px', width: '500px', overflow: 'auto'}}>
-            {food.map(([desc, hueA, hueB, textSize]) => (
+          <div className='cardDiv'>
+            {card.map(([desc, hueA, hueB, textSize]) => (
             <Card desc={desc} hueA={hueA} hueB={hueB} key={desc} textSize={textSize} />))}
           </div>
 
