@@ -102,6 +102,8 @@ export const Songs: React.FC = () => {
                 // console.log(res)
                 // console.log("hey i made it")
                 setJwt(res.data.jwt)
+
+                // Pass getSongs the jwt since the state hasn't updated yet
                 getSongs(res.data.jwt)
             })
             .catch((err) => {
