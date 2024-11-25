@@ -15,10 +15,7 @@ type SongInfo = {
     artistName: string
 }
 
-export const Song: React.FC<{song: SongInfo, playing: boolean}> = ({song, playing}) => {
-
-    // YouTube ID for this song
-    const youtubeId = getYouTubeId(song.youtubeLink)
+export const Song: React.FC<{song: SongInfo}> = ({song}) => {
 
     // Context API
     const context = useAppContext()
@@ -137,7 +134,7 @@ export const Song: React.FC<{song: SongInfo, playing: boolean}> = ({song, playin
             {hidden ? "" :
                 <>
                     {/* Conditional rendering for if the current song is playing */}
-                    {playing ? 
+                    {getYouTubeId(currentSong.youtubeLink) === context.currentSong ? 
                         <>
                             <td className="text-center align-middle" style={{textAlign: "left"}}>
                                     <Button
@@ -150,7 +147,7 @@ export const Song: React.FC<{song: SongInfo, playing: boolean}> = ({song, playin
                                     </Button>
                                 </td>
                             <td className="text-center align-middle">
-                                <img src={`https://img.youtube.com/vi/${youtubeId}/default.jpg`}></img>
+                                <img src={`https://img.youtube.com/vi/${getYouTubeId(currentSong.youtubeLink)}/default.jpg`}></img>
                             </td>
                         </>
                         :
@@ -159,15 +156,16 @@ export const Song: React.FC<{song: SongInfo, playing: boolean}> = ({song, playin
                                 <Button
                                     className="rounded-circle btn-success"
                                     onClick={() => {
-                                        if (youtubeId)
-                                            context.setCurrentSong(youtubeId)
+                                        const id = getYouTubeId(currentSong.youtubeLink)
+                                        if (id)
+                                            context.setCurrentSong(id)
                                     }}
                                 >
                                     <FaPlay />
                                 </Button>
                             </td>
                             <td className="text-center align-middle">
-                                <img src={`https://img.youtube.com/vi/${youtubeId}/default.jpg`}></img>
+                                <img src={`https://img.youtube.com/vi/${getYouTubeId(currentSong.youtubeLink)}/default.jpg`}></img>
                             </td>
                         </>
                         }

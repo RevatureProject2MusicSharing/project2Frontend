@@ -1,6 +1,5 @@
 import { Song } from "./Song"
 import 'bootstrap/dist/css/bootstrap.css';
-import { useAppContext } from "../AppContext/AppContext";
 import { getYouTubeId } from "../../utils/Utils";
 
 type SongInfo = {
@@ -16,8 +15,6 @@ type SongList = {
 }
 
 export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
-
-    const context = useAppContext()
 
     // Storing the list of songs
     const songList = songs.songs
@@ -38,23 +35,12 @@ export const SongsList: React.FC<{songs: SongList}> = ({songs}) => {
             
             {/* Table body */}
             <tbody>
-                {songList.map((song: SongInfo) => {
-                    const youtubeId = getYouTubeId(song.youtubeLink)
-
-                    // If the song is playing, show the pause button, else show the play button
-                    if (youtubeId) {
-                        return (
-                            <tr key={song.songId} style={{gap: "5px", padding: "5px"}} className="rounded w-100">
-                                <Song key={song.songId} song={song} playing={youtubeId === context.currentSong}></Song>
-                            </tr>
-                        )
-                    } else {
-                        return (
-                            <tr key={song.songId} style={{gap: "5px", padding: "5px"}} className="rounded w-100">
-                                <Song key={song.songId} song={song} playing={false}></Song>
-                            </tr>
-                        )
-                    }
+                {songList.sort((a, b) => a.songId - b.songId).map((song: SongInfo) => {
+                    return (
+                        <tr key={song.songId} style={{gap: "5px", padding: "5px"}} className="rounded w-100">
+                            <Song key={song.songId} song={song}></Song>
+                        </tr>
+                    )
                 })}
             </tbody>
             
