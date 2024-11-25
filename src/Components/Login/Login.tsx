@@ -42,8 +42,9 @@ const login = async (loginCreds: any) => {
         const jwt = response.data.jwt; // .data is where axios stores the response body
 
         // Use the context and navigate
-        context.login();
         Cookies.set('jwt', jwt, { path: '/', expires: 1, secure: false, sameSite: 'Strict' });
+        context.login();
+        
         navigate("/songs");
 
     } catch (error) {

@@ -25,14 +25,14 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentSong, setCurrentSong] = useState<string | undefined>("RjNj__yp9Tk");
-  const [userRole, setUserRole] = useState<string>("user");
+  const [userRole, setUserRole] = useState<string>("");
 
   // Function to log in
   const login = () => {
     setIsLoggedIn(true)
     const token = Cookies.get('jwt');
     const decoded = jwtDecode(token);
-    setUserRole(decoded.role)
+    Cookies.set('role', decoded.role, { path: '/', expires: 1, secure: false, sameSite: 'Strict' });
 
   };
 
