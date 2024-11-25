@@ -2,18 +2,19 @@
 #LoginBox{
     display:flex;
     background-color:#1b1b1b;
-    padding:100px;
+    padding:50px;
     border-radius:15px;
     row-gap:10px;
     flex-direction: column;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-    width:50%;
+    width:30vw;
+    height:75vh;
     
     
 }
 .LoginText{
     color: aliceblue;
-    margin-bottom:200px;
+    margin-bottom:175px;
 }
 .LoginLabel{
     display:flex;
@@ -25,7 +26,7 @@
     font-size:30px;
 }
 #icon{
-    scale: 3;
+    scale: 5;
     margin-bottom: 20px;
     
 }

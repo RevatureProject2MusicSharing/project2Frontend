@@ -5,8 +5,10 @@ import Home from './Components/Home/home'
 import { Login } from './Components/Login/Login'
 import 'bootstrap/dist/css/bootstrap.css';
 import { Register } from './Components/Login/Register/Register';
-import SongBar from './Components/SongBar/SongBar'
 import { AppProvider } from './Components/AppContext/AppContext'
+import { User } from './Components/User/User'
+import { PrivateRoute } from './PrivateRoute'
+
 
 function App() {
 
@@ -17,10 +19,10 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element ={<Register/>} />
-            <Route path="/songs" element ={<Songs/>} />
+            <Route path="/songs" element ={<PrivateRoute><Songs/></PrivateRoute>} />
+            <Route path="/users" element = {<PrivateRoute roles={["admin"]}><User/></PrivateRoute>}></Route>
           </Routes>
         </BrowserRouter>
-        <SongBar/>
     </AppProvider>
   )
 }

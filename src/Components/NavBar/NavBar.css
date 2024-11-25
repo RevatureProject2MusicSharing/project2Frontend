@@ -1,0 +1,85 @@
+/* Basic reset for padding and margin */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  /* Main container for the Navbar */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1f1f1f;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    z-index: 100;
+    border-bottom: 1px solid #333;
+  }
+  
+  /* Logo Section */
+  .navbar__logo {
+    display: flex;
+    align-items: center;
+    flex: 1; /* Logo takes as much space as necessary */
+    justify-content: flex-start;
+  }
+  
+  .navbar__logo h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  /* Buttons Section */
+  .navbar__buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex: 2; /* Buttons take up remaining space */
+  }
+  
+  .navbar__button {
+    background: none;
+    border: 1px solid transparent;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .navbar__button:hover {
+    color: #bb86fc;
+    border-color: #bb86fc;
+  }
+  
+  /* Logout Button */
+  .navbar__logout {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+  }
+  
+  .navbar__logout .logout {
+    background: none;
+    border: 1px solid transparent;
+    color: #ff4040;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .navbar__logout .logout:hover {
+    color: #bb86fc;
+    border-color: #bb86fc;
+  }
+  
