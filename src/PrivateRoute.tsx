@@ -3,6 +3,7 @@ import { useAppContext } from "./Components/AppContext/AppContext";
 import { ReactNode } from "react";
 import SongBar from "./Components/SongBar/SongBar";
 import Navbar from "./Components/NavBar/NavBar";
+import Cookies from "js-cookie";
 
 
 export const PrivateRoute = ({children, roles}:{children:ReactNode; roles?:string[]}) => {
@@ -10,7 +11,7 @@ export const PrivateRoute = ({children, roles}:{children:ReactNode; roles?:strin
     const {isLoggedIn} = useAppContext();
     const navigate = useNavigate();
     
-    if(!isLoggedIn){
+    if(!Cookies.get('jwt')){
         
         return <Navigate to="/login"/>;
     }

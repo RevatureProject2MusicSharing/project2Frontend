@@ -29,13 +29,10 @@
     display: flex;
     align-items: center;
     flex: 1; /* Logo takes as much space as necessary */
-    justify-content: flex-start;
   }
   
-  .navbar__logo h1 {
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
+  #icon{
+    margin:20px;
   }
   
   /* Buttons Section */
