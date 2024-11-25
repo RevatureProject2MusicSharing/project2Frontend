@@ -3,11 +3,18 @@ import {motion} from "motion/react"
 import "./Login.css"
 import { FcMusic } from "react-icons/fc";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAppContext } from "../AppContext/AppContext";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+
+
 
 export const Login:React.FC = () => {
 
-const navigate = useNavigate()
+const context = useAppContext();
+const navigate = useNavigate();
 
 const[loginCreds, setLoginCreds] = useState({
     username:"",
@@ -26,17 +33,28 @@ const storeValues = (input:any) => {
 
 }
 
-//Function that runs on log in button press/enter key press that sends an async login http request to backend
-//Will store logged in session in context
-const login = () => {
-    
-    console.log(loginCreds)
-}
+const login = async (loginCreds: any) => {
+    try {
+        // Post request for registering the user
+        const response = await axios.post("http://localhost:8080/login", loginCreds);
+
+        // Extract the JWT from the response body
+        const jwt = response.data.jwt; // .data is where axios stores the response body
+
+        // Use the context and navigate
+        context.login();
+        Cookies.set('jwt', jwt, { path: '/', expires: 1, secure: false, sameSite: 'Strict' });
+        navigate("/songs");
+
+    } catch (error) {
+        alert("Failed! " + error);
+    }
+};
 
 //Handles enter keypresses on form fields, runs login function
-const handleKeyPress = (event: any) => {
+const handleKeyPress = async (event: any) => {
     if (event.key === "Enter"){
-        login();
+        await login(loginCreds);
     }
 }
 
@@ -78,7 +96,7 @@ return(
             whileTap={{ scale: 0.9 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }
             }
-            onClick={login}
+            onClick={() => login(loginCreds)}
             >Log in</motion.button>
             </Row>
             <Row className="d-flex align-items-center">
@@ -86,10 +104,5 @@ return(
             <Link to="/register" className="ms-1" data-bs-theme="dark">Sign up here.</Link>
         </Row>
     </Container>
-    
-)
-
-
-
-
+    )
 }
