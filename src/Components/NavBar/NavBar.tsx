@@ -2,6 +2,7 @@ import React from 'react';
 import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../AppContext/AppContext';
+import { GiPokerHand } from "react-icons/gi";
 
 const Navbar: React.FC = () => {
   const context = useAppContext();
@@ -11,15 +12,15 @@ const Navbar: React.FC = () => {
     {context.isLoggedIn ? (
     <div className="navbar">
       {/* Company Name/Logo */}
-      <div className="navbar__logo">
-        <h1>CompanyLogo</h1>
+      <div  className="navbar__logo">
+       <GiPokerHand id="icon" />
       </div>
 
       {/* Navigation Buttons */}
       <div className="navbar__buttons">
-        <button className="navbar__button">Playlists</button>
+        <button onClick={() => navigate("/playlists")} className="navbar__button">Playlists</button>
         <button onClick={() => navigate("/songs")} className="navbar__button">Songs</button>
-        <button className="navbar__button">Users</button>
+        <button onClick={() => navigate("/users")} className="navbar__button">Users</button>
       </div>
 
       {/* Logout Button */}
