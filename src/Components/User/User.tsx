@@ -98,7 +98,7 @@ export const User:React.FC = () => {
     // HTML
     return(
         <>
-            <Container style={{padding: "25px", width: "100vw", marginTop: "5%", marginBottom: "10%"}}>
+            <Container style={{padding: "25px", width: "100vw", marginTop: "5%", marginBottom: "10%", height: "100%"}}>
                 <h1 style={{textAlign: "left"}}>Users</h1>
                 
                 {/* GRID */}
