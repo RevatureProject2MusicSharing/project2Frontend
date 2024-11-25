@@ -60,14 +60,6 @@ export const UserList:React.FC <{users:any[]}> = ({users}) => {
 
 
 
-    const viewUser = (id:number)=>{
-       
-        // store userId in a variable to be used by the get request
-        store.userID = id;
-
-        // navigate to users account 
-        navigate("/userData")
-    }
 
 
 
@@ -76,7 +68,7 @@ export const UserList:React.FC <{users:any[]}> = ({users}) => {
         <Container>
                 <ul>
                     {users.map((user:any)=>(
-                    <li>{user.userId} {user.username} <Button className= "btn-primary" onClick={()=>viewUser(user.userId)}>User Background</Button>
+                    <li>{user.userId} {user.username} {user.role}
                     <Button className= "btn-info" onClick={()=>{changeRole(user.userId,user.role)}}>Change Role</Button>
                     <Button className= "btn-danger" onClick={()=>{deleteUser(user.userId)}}>Delete User</Button></li>))}
                 </ul>
