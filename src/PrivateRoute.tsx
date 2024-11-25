@@ -7,7 +7,7 @@ import Navbar from "./Components/NavBar/NavBar";
 
 export const PrivateRoute = ({children, roles}:{children:ReactNode; roles?:string[]}) => {
 
-    const {isLoggedIn,userRole} = useAppContext();
+    const {isLoggedIn} = useAppContext();
     const navigate = useNavigate();
     
     if(!isLoggedIn){
@@ -15,10 +15,10 @@ export const PrivateRoute = ({children, roles}:{children:ReactNode; roles?:strin
         return <Navigate to="/login"/>;
     }
 
-    if(roles && !roles.some((role: string) => userRole.includes(role))){
+    if(roles && !roles.some((role: string) => Cookies.get('role').includes(role))){
         return(
         <>
-        {console.log("test")}
+       
          <h3 id="unauthorizedHeader">Unauthorized.</h3>
          <button onClick={() => navigate(-1)}>Go back.</button>
         </>)

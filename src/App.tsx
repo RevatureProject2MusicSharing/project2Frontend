@@ -19,8 +19,9 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element ={<Register/>} />
+            <Route path="/" element={<PrivateRoute><Home/></PrivateRoute>}/>
             <Route path="/songs" element ={<PrivateRoute><Songs/></PrivateRoute>} />
-            <Route path="/users" element = {<PrivateRoute roles={["admin"]}><User/></PrivateRoute>}></Route>
+            <Route path="/users" element = {<PrivateRoute roles={["Admin"]}><User/></PrivateRoute>}></Route>
           </Routes>
         </BrowserRouter>
     </AppProvider>
