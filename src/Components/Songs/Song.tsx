@@ -139,8 +139,10 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
                                     className="rounded-circle btn-success"
                                     onClick={() => {
                                         const id = getYouTubeId(currentSong.youtubeLink)
-                                        if (id){
+                                        if (id) {
                                             context.setCurrentSong(id)
+                                            context.setSongName(currentSong.songName)
+                                            context.setSongArtist(currentSong.artistName)
                                             context.setIsPlaying(true)
                                         }
                                     }}
@@ -160,11 +162,11 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
                     {/* <td>{songInfo.youtubeLink}</td> */}
                     <td className="text-center align-middle">{currentSong.genre}</td>
                     <td className="text-center align-middle" style={{textAlign: "right"}}>
-                        <DropdownButton data-bs-theme="dark" variant="success" id="dropdown-basic-button" title={<FaCog />}>
+                        {Cookies.get('role') === 'Admin' ? <DropdownButton data-bs-theme="dark" variant="success" id="dropdown-basic-button" title={<FaCog />}>
                             <Dropdown.Item onClick={handleShowEditModal}>Edit Song</Dropdown.Item>
-                            <Dropdown.Item onClick={handleShowPlaylistModal}>Add to Playlist</Dropdown.Item>
+                            {/* <Dropdown.Item onClick={handleShowPlaylistModal}>Add to Playlist</Dropdown.Item> */}
                             <Dropdown.Item onClick={handleDelete}>Delete Song</Dropdown.Item>
-                        </DropdownButton>
+                        </DropdownButton> : ""}
                     </td>
 
 

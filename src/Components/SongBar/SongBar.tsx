@@ -106,6 +106,7 @@ const SongBar: React.FC = () => {
       isPlaying: true 
     }));
 
+    context.setIsPlaying(true)
     console.log("Video Playing");
   }
   const opts: YouTubeProps['opts'] = {
@@ -130,8 +131,8 @@ const SongBar: React.FC = () => {
         <div className="left">
           <YouTube videoId={context.currentSong} iframeClassName="youtubePlayer" opts={optState} onPlay={onPlay} onPause={onPause} onReady={onPlayerReady} />
           <div className="songInfo">
-            <div className="songTitle">Song Title</div>
-            <div className="artistName">Artist Name</div>
+            <div className="songTitle">{context.songName}</div>
+            <div className="artistName">{context.songArtist}</div>
           </div>
         </div>
 
@@ -149,7 +150,13 @@ const SongBar: React.FC = () => {
             )}
           </Button>
           
-          <Button variant="link" className="controlButton" onClick={() => context.setCurrentSong("CvjRlYpXS5U")}>
+          <Button variant="link" className="controlButton"
+            onClick={() => {
+                context.setCurrentSong("CvjRlYpXS5U")
+                context.setSongArtist("Radiohead")
+                context.setSongName("Jigsaw Falling Into Place")
+                context.setIsPlaying(true)
+            }}>
             <RiSkipForwardFill size={28} />
           </Button>
         </div>
