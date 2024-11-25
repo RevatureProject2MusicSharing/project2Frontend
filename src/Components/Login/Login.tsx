@@ -1,18 +1,20 @@
-import { Container, Form, Row } from "react-bootstrap"
+import { Col, Container, Form, Row } from "react-bootstrap"
 import {motion} from "motion/react"
 import "./Login.css"
-import { FcMusic } from "react-icons/fc";
 import { useState } from "react";
 import axios from "axios";
 import { useAppContext } from "../AppContext/AppContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { PiWarningCircleLight } from "react-icons/pi";
+import { GiPokerHand } from "react-icons/gi";
 
 export const Login:React.FC = () => {
 
 const context = useAppContext();
 const navigate = useNavigate();
+const[invalidLogin, setInvalidLogin] = useState(false);
 
 const[loginCreds, setLoginCreds] = useState({
     username:"",
@@ -60,8 +62,12 @@ return(
     
     <Container id="LoginBox">
         <Row id="header">
-        <FcMusic id="icon" />
-        <h1 className = "LoginText" id="LoginHeader">Login</h1>
+        
+        <GiPokerHand id="icon" />
+        <span className = "LoginText" id="LoginHeader">Log in to All In Audio</span>
+        <Col>
+        {invalidLogin ? (<><PiWarningCircleLight className = "warning" /><span className = "warning">Invalid credentials.</span></>):(<></>)}
+        </Col>
         </Row>
         <Row id="formFieldRow">
             <Form>
