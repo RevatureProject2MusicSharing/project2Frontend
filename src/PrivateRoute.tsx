@@ -11,7 +11,7 @@ export const PrivateRoute = ({children, roles}:{children:ReactNode; roles?:strin
     const {isLoggedIn} = useAppContext();
     const navigate = useNavigate();
     
-    if(!isLoggedIn){
+    if(!Cookies.get('jwt')){
         
         return <Navigate to="/login"/>;
     }
