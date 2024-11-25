@@ -159,9 +159,9 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
                     <td className="text-center align-middle">{currentSong.genre}</td>
                     <td className="text-center align-middle" style={{textAlign: "right"}}>
                         <DropdownButton data-bs-theme="dark" variant="success" id="dropdown-basic-button" title={<FaCog />}>
-                            <Dropdown.Item onClick={handleShowEditModal}>Edit Song</Dropdown.Item>
+                            {Cookies.get('role') === 'Admin' ? <Dropdown.Item onClick={handleShowEditModal}>Edit Song</Dropdown.Item> : ""}
                             <Dropdown.Item onClick={handleShowPlaylistModal}>Add to Playlist</Dropdown.Item>
-                            <Dropdown.Item onClick={handleDelete}>Delete Song</Dropdown.Item>
+                            {Cookies.get('role') === 'Admin' ? <Dropdown.Item onClick={handleDelete}>Delete Song</Dropdown.Item> : ""}
                         </DropdownButton>
                     </td>
 
