@@ -50,6 +50,8 @@ export const Songs: React.FC = () => {
             const youtubeId = getYouTubeId(res.data.youtubeLink)
             if (youtubeId) {
                 context.setCurrentSong(youtubeId)
+                context.setSongName(res.data.songName)
+                context.setSongArtist(res.data.artistName)
             }
         })
         .catch(() => {

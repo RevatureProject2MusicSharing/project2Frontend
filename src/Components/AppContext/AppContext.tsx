@@ -28,7 +28,7 @@ interface AppProviderProps {
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [currentSong, setCurrentSong] = useState<string | undefined>("");
+  const [currentSong, setCurrentSong] = useState<string | undefined>("RjNj__yp9Tk");
   const [userRole, setUserRole] = useState<string>("");
 
   const [songName, setSongName] = useState<string>("Little Wing");
