@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import  { UserList } from "./UserList"
 import axios from 'axios';
 import { useNavigate } from "react-router-dom"
+import Cookies from "js-cookie";
 
 //Admins should get navigated to this after login 
 // it'll display a list of all of the users they can then click a button to 
@@ -28,7 +29,7 @@ const getAllUsers = async () => {
 //const response = await axios.get("URL to RDS /users")
 // "http//p2team1.cbsegmk0oe5b.us-east-1.rds.amazonaws.com:5432/postgres/users"
 
-const response = await axios.get("http//localhost:8282/users")
+const response = await axios.get("http//p2team1.cbsegmk0oe5b.us-east-1.rds.amazonaws.com:5432/postgres/users", { headers: {"Authorization": "Bearer " + Cookies.get('jwt')} })
 
     response.data= Array.from(response.data);
 

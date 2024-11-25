@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"
 import { store } from "../../globalData/store"
 import axios from "axios"
 import { User } from "./User"
+import Cookies from "js-cookie";
+
 
 
 export const UserList:React.FC <{users:any[]}> = ({users}) => {
@@ -18,8 +20,9 @@ export const UserList:React.FC <{users:any[]}> = ({users}) => {
         alert("Employee with id" + id +" has been Updated")
         if(user.role =="Admin"){
             
-             const response = await axios.patch("http://localhost:7005/employees/" + id,"User", {
+             const response = await axios.patch("http//p2team1.cbsegmk0oe5b.us-east-1.rds.amazonaws.com:5432/postgres/users" + id,"User", {
                 headers:{
+                    "Authorization": "Bearer " + Cookies.get('jwt'),
                     "Content-Type":"text/plain"
                 }
              } )
@@ -29,8 +32,9 @@ export const UserList:React.FC <{users:any[]}> = ({users}) => {
 
         } else if(user.role =="User"){
         
-        const response = await axios.patch("http://localhost:7005/employees/" + id, "Admin", {
+        const response = await axios.patch("http//p2team1.cbsegmk0oe5b.us-east-1.rds.amazonaws.com:5432/postgres/users" + id, "Admin", {
             headers:{
+                "Authorization": "Bearer " + Cookies.get('jwt'),
                 "Content-Type":"text/plain"
             }
          })
@@ -47,7 +51,7 @@ export const UserList:React.FC <{users:any[]}> = ({users}) => {
         alert("User with id" + id +" has been deleted")
 
         //request to delete this employee
-        const response = await axios.delete("http://localhost:8282/users/" + id) 
+        const response = await axios.delete("http//p2team1.cbsegmk0oe5b.us-east-1.rds.amazonaws.com:5432/postgres/users" + id, {headers: {"Authorization": "Bearer " + Cookies.get('jwt')}} ) 
         .then(()=> {alert("Success!")})
         .catch((error)=>{alert("Failed! " + error.message)})
 
