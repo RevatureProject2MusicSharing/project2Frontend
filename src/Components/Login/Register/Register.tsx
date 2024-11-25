@@ -1,9 +1,11 @@
 import axios from "axios"
 import { useState } from "react"
-import { Container, Form, Row } from "react-bootstrap"
+import { Col, Container, Form, Row } from "react-bootstrap"
 import "./Register.css"
 import { motion } from "motion/react"
 import { RegisterSuccess } from "./RegisterSuccess"
+import { PiWarningCircleLight } from "react-icons/pi";
+import { Link } from "react-router-dom"
 
 export const Register:React.FC = () => {
 
@@ -16,6 +18,8 @@ export const Register:React.FC = () => {
     //state variable to do conditional rendering on successful registration
     const[isRegistered, setIsRegistered] = useState(false);
 
+    const[isInvalid, setIsInvalid] = useState(false);
+
     //stores text in form fields in user state variable
     const storeValues = (input: any) => {
 
@@ -26,14 +30,18 @@ export const Register:React.FC = () => {
 
     }
 
+    
+
     const register = async () => {
 
         //TODO: check if username is already exists in DB before sending post request.
         
         //post request for registering user
-        const response = await axios.post("http://localhost:8080/users", user)
-        .then(() => {setIsRegistered(true)}) //on successful post request change state of isRegistered
-        .catch((error) => {alert("Failed! " + error.message)})
+        const response = await axios.post("http://localhost:8080/register", user)
+        .then(() => {setIsRegistered(true)
+            setIsInvalid(false)
+        }) //on successful post request change state of isRegistered
+        .catch((error) => {setIsInvalid(true)})
     }
     
 
@@ -66,13 +74,21 @@ export const Register:React.FC = () => {
                                 onChange={storeValues} />
                         </Form.Group>
                         </Form>
+                        <Col >
+                        {isInvalid ? (<><PiWarningCircleLight className = "warning" /><span className = "warning">Invalid credentials.</span></>):(<></>)}
+                        </Col>
+                        
                         <motion.button
                         className="box"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         transition={{ type: "spring", stiffness: 400, damping: 10 }}
                         onClick={register}
-                        >Confirm</motion.button></>
+                        >Confirm</motion.button>
+                        <span>Already have an account?</span>
+                        <Link to="/login" className = "ms-1" data-bs-theme="dark">Login in here.</Link>
+                        </>
+                        
             )}
         </Container>
 

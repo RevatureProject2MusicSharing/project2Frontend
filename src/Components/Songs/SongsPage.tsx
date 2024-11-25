@@ -8,10 +8,17 @@ import { motion } from "motion/react";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import { useAppContext } from "../AppContext/AppContext";
 import { getYouTubeId } from "../../utils/Utils";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import './Songs.css'
 
 export const Songs: React.FC = () => {
     
+    // Context API
     const context = useAppContext()
+
+    // Navigate
+    const navigate = useNavigate()
 
     // State for showing/hiding add song modal
     const [show, setShow] = useState(false);
@@ -29,50 +36,53 @@ export const Songs: React.FC = () => {
     const [song, setSong] = useState({
         "songName": "",
         "youtubeLink": "",
-        "genre": ""
+        "genre": "",
+        "artistName": ""
     })
 
     const [loadError, setLoadError] = useState<boolean>(false)
 
     // Function to set the current song to a random song
     const getRandomSong = async () => {
-        setLoadError(false)
-        await axios.get("http://localhost:8080/songs/random")
+        context.setCurrentSong("")
+        await axios.get("http://localhost:8080/songs/random", { headers: {"Authorization": "Bearer " + Cookies.get('jwt')} })
         .then((res) => {
             const youtubeId = getYouTubeId(res.data.youtubeLink)
             if (youtubeId) {
                 context.setCurrentSong(youtubeId)
             }
         })
-        .catch((err) => {
-            setLoadError(true)
-            console.log(err.message)
+        .catch(() => {
+            navigate("/login")
         })
     }
 
     // Function to get all songs
     const getSongs = async () => {
         setLoadError(false)
-        await axios.get("http://localhost:8080/songs")
+        await axios({method: 'get', url: "http://localhost:8080/songs", headers: {"Authorization": "Bearer " + Cookies.get('jwt')}})
         .then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
             setSongs({songs: res.data})
         })
         .catch((err) => {
-            setLoadError(true)
-            console.log(err.message)
+            if (err.response.status && err.response.status === 403) {
+                navigate("/login")
+            } else {
+                setLoadError(true)
+            }
         })
     }
 
     // Function to add songs
     const handleAddSongs = async () => {
-        if (song.songName === "" || song.youtubeLink === "" || song.genre === "") {
+        if (song.songName === "" || song.youtubeLink === "" || song.genre === "" || song.artistName === "") {
             console.log("invalid")
         } else {
-            console.log(song)
-            await axios.post("http://localhost:8080/songs", song)
-            .then((res) => {
-                console.log(res)
+            // console.log(song)
+            await axios.post("http://localhost:8080/songs", song, { headers: {"Authorization": "Bearer " + Cookies.get('jwt')} })
+            .then(() => {
+                // console.log(res)
                 getSongs()
             })
             .catch((err) => {
@@ -95,12 +105,12 @@ export const Songs: React.FC = () => {
 
     return (
         <>
-            <Container style={{padding: "25px", width: "100vw"}}>
+            <Container style={{padding: "25px", width: "100vw", marginTop: "5%", marginBottom: "10%"}}>
                 {/* Header */}
                 <h1 style={{textAlign: "left"}}>Songs</h1>
 
                 {/* Table for list of songs */}
-                <Table style={{gap: "5px"}} className="table table-dark">
+                <Table style={{gap: "5px"}} className="table table-dark table-hover" id="dark">
                     <SongsList songs={songs}></SongsList>
                 </Table>
 
@@ -108,7 +118,7 @@ export const Songs: React.FC = () => {
                     {loadError ?
                     <div>
                         <p style={{color: "red"}}>Songs could not be loaded.</p>
-                        <Button className="btn-success" onClick={getSongs}>Refresh</Button>
+                        <Button className="btn-success" onClick={() => { getSongs() }}>Refresh</Button>
                     </div> : ""}
                 </div>
 
@@ -141,17 +151,25 @@ export const Songs: React.FC = () => {
                         <Modal.Title style={{color: "white"}}>Add New Song</Modal.Title>
                     </Modal.Header>
                     <Modal.Body style={{gap: "5px"}} className="d-flex flex-column">
+
+                        <Form.Control
+                            type="text"
+                            placeholder="youtube link"
+                            name="youtubeLink"
+                            onChange={storeValues}
+                        />
+
                         <Form.Control
                             type="text"
                             placeholder="song name"
                             name="songName"
                             onChange={storeValues}
                         />
-
+                        
                         <Form.Control
                             type="text"
-                            placeholder="youtube link"
-                            name="youtubeLink"
+                            placeholder="artist name"
+                            name="artistName"
                             onChange={storeValues}
                         />
 
