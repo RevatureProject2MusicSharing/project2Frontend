@@ -37,7 +37,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   };
 
   // Function to log out
-  const logout = () => setIsLoggedIn(false);
+  const logout = () => {
+    Cookies.remove('role');
+    setIsLoggedIn(false)};
 
   // Function to set the current song
   const updateCurrentSong = (songId: string) => setCurrentSong(songId);
