@@ -46,6 +46,14 @@ const SongBar: React.FC = () => {
   }
   },[context.isPlaying])
 
+  useEffect(() =>{
+    if (songState.player != undefined){
+
+      songState.player.loadVideoById(context.currentSong);
+
+    }
+    },[context.currentSong])
+
   // Handle play/pause toggle
   const togglePlayPause = (): void => {
     if (songState.player != undefined) {
@@ -89,13 +97,16 @@ const SongBar: React.FC = () => {
       elementId: event.target.id,
       player: event.target
     }));
+
   }
+
   const onPause: YouTubeProps['onPause'] = (event) => {
     // access to player in all event handlers via event.target
     setSongState(songState => ({
       ...songState,
       isPlaying: false
     }));
+
 
     console.log("Video paused");
   }
@@ -129,7 +140,7 @@ const SongBar: React.FC = () => {
       <div className="songBar">
         {/* Left section: Song Info */}
         <div className="left">
-          <YouTube videoId={context.currentSong} iframeClassName="youtubePlayer" opts={optState} onPlay={onPlay} onPause={onPause} onReady={onPlayerReady} />
+          <YouTube videoId="RjNj__yp9Tk"  iframeClassName="youtubePlayer" opts={optState} onPlay={onPlay} onPause={onPause} onReady={onPlayerReady} />
           <div className="songInfo">
             <div className="songTitle">{context.songName}</div>
             <div className="artistName">{context.songArtist}</div>
