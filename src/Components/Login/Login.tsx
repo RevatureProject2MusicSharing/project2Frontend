@@ -10,8 +10,6 @@ import Cookies from "js-cookie";
 import { PiWarningCircleLight } from "react-icons/pi";
 import { GiPokerHand } from "react-icons/gi";
 
-
-
 export const Login:React.FC = () => {
 
 const context = useAppContext();
