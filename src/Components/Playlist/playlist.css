@@ -6,3 +6,28 @@
 .p-custom:hover {
   border: 2px solid rgb(33, 45, 45);
 }
+.buttonContainer {
+  float:left;
+  position:relative
+}
+.buttonContainer:hover .play{
+  display:block
+}
+.image {
+  width:128px; 
+  height:72px;
+  filter: brightness(100%);
+}
+.play{
+position : absolute;
+  display:none;
+  top:20%; 
+  width:64px;
+  height:36px;
+  margin:0 auto; left:0px;
+  right:0px;
+  z-index:100
+} 
+image:hover {
+  filter: brightness(50%);
+}
