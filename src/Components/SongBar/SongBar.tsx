@@ -89,9 +89,6 @@ const SongBar: React.FC = () => {
       elementId: event.target.id,
       player: event.target
     }));
-
-    console.log(songState);
-    event.target.playVideo();
   }
   const onPause: YouTubeProps['onPause'] = (event) => {
     // access to player in all event handlers via event.target

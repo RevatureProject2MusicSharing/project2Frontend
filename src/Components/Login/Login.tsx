@@ -48,7 +48,7 @@ const login = async (loginCreds: any) => {
         navigate("/songs");
 
     } catch (error) {
-        alert("Failed! " + error);
+        setInvalidLogin(true)
     }
 };
 
