@@ -46,6 +46,17 @@ const SongBar: React.FC = () => {
   }
   },[context.isPlaying])
 
+  useEffect(() =>{
+    if (songState.player != undefined){
+     if(context.isPlaying){
+      songState.player.playVideo()
+     }
+     else{
+      songState.player.pauseVideo()
+     }
+    }
+    },[context.isPlaying])
+
   // Handle play/pause toggle
   const togglePlayPause = (): void => {
     if (songState.player != undefined) {
@@ -77,6 +88,8 @@ const SongBar: React.FC = () => {
       ...prevState,
       volume: Number(event.target.value),
     }));
+
+    songState.player.setVolume(Number(event.target.value))
   };
 
   //youtube player
