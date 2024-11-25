@@ -139,8 +139,10 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
                                     className="rounded-circle btn-success"
                                     onClick={() => {
                                         const id = getYouTubeId(currentSong.youtubeLink)
-                                        if (id){
+                                        if (id) {
                                             context.setCurrentSong(id)
+                                            context.setSongName(currentSong.songName)
+                                            context.setSongArtist(currentSong.artistName)
                                             context.setIsPlaying(true)
                                         }
                                     }}

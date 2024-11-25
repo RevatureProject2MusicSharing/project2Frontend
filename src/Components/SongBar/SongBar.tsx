@@ -131,8 +131,8 @@ const SongBar: React.FC = () => {
         <div className="left">
           <YouTube videoId={context.currentSong} iframeClassName="youtubePlayer" opts={optState} onPlay={onPlay} onPause={onPause} onReady={onPlayerReady} />
           <div className="songInfo">
-            <div className="songTitle">Song Title</div>
-            <div className="artistName">Artist Name</div>
+            <div className="songTitle">{context.songName}</div>
+            <div className="artistName">{context.songArtist}</div>
           </div>
         </div>
 

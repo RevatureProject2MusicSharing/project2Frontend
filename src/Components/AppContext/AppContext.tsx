@@ -8,10 +8,14 @@ interface GlobalState {
   currentSong: string | undefined;
   isPlaying: boolean;
   userRole: string;
+  songName: string;
+  songArtist: string;
   login: () => void;
   logout: () => void;
   setCurrentSong: (song: string) => void;
   setIsPlaying: (currState: boolean) => void;
+  setSongName: (songName: string) => void;
+  setSongArtist: (songArtist: string) => void;
 }
 
 // Create the context with a default value (we'll provide the default values later)
@@ -26,6 +30,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentSong, setCurrentSong] = useState<string | undefined>("RjNj__yp9Tk");
   const [userRole, setUserRole] = useState<string>("");
+
+  const [songName, setSongName] = useState<string>("");
+  const [songArtist, setSongArtist] = useState<string>("");
 
   // Function to log in
   const login = () => {
@@ -49,7 +56,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   }
 
   return (
-    <AppContext.Provider value={{ isLoggedIn, currentSong, isPlaying, userRole, login, logout, setIsPlaying: updateIsPlaying, setCurrentSong: updateCurrentSong }}>
+    <AppContext.Provider value={{ isLoggedIn, currentSong, isPlaying, userRole, songName, songArtist, login, logout, setIsPlaying: updateIsPlaying, setCurrentSong: updateCurrentSong, setSongName, setSongArtist }}>
       {children}
     </AppContext.Provider>
   );
