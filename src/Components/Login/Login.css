@@ -1,0 +1,60 @@
+
+#LoginBox{
+    display:flex;
+    background-color:#1b1b1b;
+    padding:50px;
+    border-radius:15px;
+    row-gap:10px;
+    flex-direction: column;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    width:30vw;
+    height:75vh;
+    
+    
+}
+.LoginText{
+    color: aliceblue;
+    margin-bottom:175px;
+}
+.LoginLabel{
+    display:flex;
+    color:aliceblue;
+    
+}
+#LoginHeader{
+    font-weight:bold;
+    font-size:30px;
+}
+#icon{
+    scale: 5;
+    margin-bottom: 20px;
+    
+}
+.box {
+   
+    height: 80px;
+    border-radius: 50px;
+    background-color: #1ed760;
+    cursor: pointer;
+    align-content:center;
+    border-color:#017228;
+    scale:.8
+}
+#indexBody{
+    background: linear-gradient(rgba(0, 0, 0, 0.808) 0%, rgb(0, 0, 0) 100%);
+    height:100vh;
+    
+  }
+button:hover{
+    border-color:rgb(175, 236, 193);
+    border-width:2px;
+}
+span{
+    color:aliceblue
+}
+#formFieldRow{
+    width:300px;
+    align-self:center;
+}
+
+
