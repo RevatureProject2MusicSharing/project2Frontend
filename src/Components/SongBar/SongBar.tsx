@@ -120,6 +120,7 @@ const SongBar: React.FC = () => {
       isPlaying: true 
     }));
 
+    context.setIsPlaying(true)
     console.log("Video Playing");
   }
   const opts: YouTubeProps['opts'] = {
