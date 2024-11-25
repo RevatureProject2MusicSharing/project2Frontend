@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./playlist.css"
-import { Dropdown } from "react-bootstrap";
+import { Container, Dropdown } from "react-bootstrap";
 import { PlaylistSongTable } from "./PlaylistSongtable";
 /**
  * Playlist Object
@@ -71,25 +71,24 @@ export const PlaylistComponent:React.FC = () => {
   // HTML
   return (
     <>
-      <h1>Playlists</h1>    
-      <Dropdown>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-        Playlist
-        </Dropdown.Toggle>
-        <Dropdown.Menu> 
-          {playlists.map((playlist, index) => (
-        <section className="row bg-secondary m-2 rounded p-custom" key={index} onClick={() => handlePlaylistClick(playlist)}>
-          <div className="col-sm-4 p-3">{playlist.playlistName}</div>
-          <div className="col-sm-4 p-3">Username</div>
-          <div className="col-sm-4 p-3">{playlist.isPublic ? "Public" : "Private"}</div>
-        </section>
-      ))}
-        </Dropdown.Menu>
-      </Dropdown>
-      <PlaylistSongTable songs={currSongList}></PlaylistSongTable>
-
-      {/* List of Playlist */}
-
+      <div className="main">
+        <h1>Playlists</h1>    
+        <Dropdown>
+          <Dropdown.Toggle variant="success" id="dropdown-basic">
+          Playlist
+          </Dropdown.Toggle>
+          <Dropdown.Menu> 
+            {playlists.map((playlist, index) => (
+          <section className="row bg-secondary m-2 rounded p-custom" key={index} onClick={() => handlePlaylistClick(playlist)}>
+            <div className="col-sm-4 p-3">{playlist.playlistName}</div>
+            <div className="col-sm-4 p-3">Username</div>
+            <div className="col-sm-4 p-3">{playlist.isPublic ? "Public" : "Private"}</div>
+          </section>
+        ))}
+          </Dropdown.Menu>
+        </Dropdown>
+        <PlaylistSongTable songs={currSongList}></PlaylistSongTable>
+      </div>
     </>
   )
 }
