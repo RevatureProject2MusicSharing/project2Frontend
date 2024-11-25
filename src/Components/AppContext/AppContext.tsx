@@ -31,8 +31,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [currentSong, setCurrentSong] = useState<string | undefined>("RjNj__yp9Tk");
   const [userRole, setUserRole] = useState<string>("");
 
-  const [songName, setSongName] = useState<string>("");
-  const [songArtist, setSongArtist] = useState<string>("");
+  const [songName, setSongName] = useState<string>("Little Wing");
+  const [songArtist, setSongArtist] = useState<string>("Jimi Hendrix");
 
   // Function to log in
   const login = () => {

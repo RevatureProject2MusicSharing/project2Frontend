@@ -164,7 +164,13 @@ const SongBar: React.FC = () => {
             )}
           </Button>
           
-          <Button variant="link" className="controlButton" onClick={() => context.setCurrentSong("CvjRlYpXS5U")}>
+          <Button variant="link" className="controlButton"
+            onClick={() => {
+                context.setCurrentSong("CvjRlYpXS5U")
+                context.setSongArtist("Radiohead")
+                context.setSongName("Jigsaw Falling Into Place")
+                context.setIsPlaying(true)
+            }}>
             <RiSkipForwardFill size={28} />
           </Button>
         </div>
