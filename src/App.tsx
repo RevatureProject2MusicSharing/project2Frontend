@@ -8,6 +8,7 @@ import { AppProvider } from './Components/AppContext/AppContext'
 import { User } from './Components/User/User'
 import { PrivateRoute } from './PrivateRoute'
 import { PlaylistComponent } from './Components/Playlist/PlaylistComponent';
+import { Home } from './Components/Home/Home';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
     <AppProvider>
       <BrowserRouter>
           <Routes>
+            <Route path="" element={<Home/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element ={<Register/>} />
             <Route path="/songs" element ={<PrivateRoute><Songs/></PrivateRoute>} />
