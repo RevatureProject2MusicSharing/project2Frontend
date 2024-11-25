@@ -8,13 +8,17 @@ import { motion } from "motion/react";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import { useAppContext } from "../AppContext/AppContext";
 import { getYouTubeId } from "../../utils/Utils";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import './Songs.css'
 
 export const Songs: React.FC = () => {
     
+    // Context API
     const context = useAppContext()
 
-    // Temporary state for storing JWT
-    const [jwt, setJwt] = useState("")
+    // Navigate
+    const navigate = useNavigate()
 
     // State for showing/hiding add song modal
     const [show, setShow] = useState(false);
@@ -40,32 +44,33 @@ export const Songs: React.FC = () => {
 
     // Function to set the current song to a random song
     const getRandomSong = async () => {
-        setLoadError(false)
         context.setCurrentSong("")
-        await axios.get("http://localhost:8080/songs/random", { headers: {"Authorization": "Bearer " + jwt} })
+        await axios.get("http://localhost:8080/songs/random", { headers: {"Authorization": "Bearer " + Cookies.get('jwt')} })
         .then((res) => {
             const youtubeId = getYouTubeId(res.data.youtubeLink)
             if (youtubeId) {
                 context.setCurrentSong(youtubeId)
             }
         })
-        .catch((err) => {
-            setLoadError(true)
-            console.log(err.message)
+        .catch(() => {
+            navigate("/login")
         })
     }
 
     // Function to get all songs
-    const getSongs = async (token: string) => {
+    const getSongs = async () => {
         setLoadError(false)
-        await axios({method: 'get', url: "http://localhost:8080/songs", headers: {"Authorization": "Bearer " + token}})
+        await axios({method: 'get', url: "http://localhost:8080/songs", headers: {"Authorization": "Bearer " + Cookies.get('jwt')}})
         .then((res) => {
             // console.log(res.data)
             setSongs({songs: res.data})
         })
         .catch((err) => {
-            setLoadError(true)
-            console.log(err.message)
+            if (err.response.status && err.response.status === 403) {
+                navigate("/login")
+            } else {
+                setLoadError(true)
+            }
         })
     }
 
@@ -75,10 +80,10 @@ export const Songs: React.FC = () => {
             console.log("invalid")
         } else {
             // console.log(song)
-            await axios.post("http://localhost:8080/songs", song, { headers: {"Authorization": "Bearer " + jwt} })
+            await axios.post("http://localhost:8080/songs", song, { headers: {"Authorization": "Bearer " + Cookies.get('jwt')} })
             .then(() => {
                 // console.log(res)
-                getSongs(jwt)
+                getSongs()
             })
             .catch((err) => {
                 alert(err.message)
@@ -93,37 +98,19 @@ export const Songs: React.FC = () => {
         setSong((song) => ({...song, [name]: value}))
     }
 
-    const login = async () => {
-        await axios.post("http://localhost:8080/login", {
-                "username": "Michael",
-                "password": "password"
-            })
-            .then((res) => {
-                // console.log(res)
-                // console.log("hey i made it")
-                setJwt(res.data.jwt)
-
-                // Pass getSongs the jwt since the state hasn't updated yet
-                getSongs(res.data.jwt)
-            })
-            .catch((err) => {
-                alert(err.message)
-            })
-    }
-
     // useEffect to trigger getSongs() on component load
     useEffect(() => {
-        login()
+        getSongs()
     }, [])
 
     return (
         <>
-            <Container style={{padding: "25px", width: "100vw"}}>
+            <Container style={{padding: "25px", width: "100vw", marginTop: "5%", marginBottom: "10%"}}>
                 {/* Header */}
                 <h1 style={{textAlign: "left"}}>Songs</h1>
 
                 {/* Table for list of songs */}
-                <Table style={{gap: "5px"}} className="table table-dark table-hover">
+                <Table style={{gap: "5px"}} className="table table-dark table-hover" id="dark">
                     <SongsList songs={songs}></SongsList>
                 </Table>
 
@@ -131,7 +118,7 @@ export const Songs: React.FC = () => {
                     {loadError ?
                     <div>
                         <p style={{color: "red"}}>Songs could not be loaded.</p>
-                        <Button className="btn-success" onClick={() => { getSongs(jwt) }}>Refresh</Button>
+                        <Button className="btn-success" onClick={() => { getSongs() }}>Refresh</Button>
                     </div> : ""}
                 </div>
 
