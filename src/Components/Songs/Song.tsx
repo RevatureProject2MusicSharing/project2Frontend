@@ -115,7 +115,7 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
             {hidden ? "" :
                 <>
                     {/* Conditional rendering for if the current song is playing */}
-                    {getYouTubeId(currentSong.youtubeLink) === context.currentSong ? 
+                    {getYouTubeId(currentSong.youtubeLink) === context.currentSong && context.isPlaying ? 
                         <>
                             <td className="text-center align-middle" style={{textAlign: "left"}}>
                                     <Button
@@ -139,8 +139,10 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
                                     className="rounded-circle btn-success"
                                     onClick={() => {
                                         const id = getYouTubeId(currentSong.youtubeLink)
-                                        if (id)
+                                        if (id){
                                             context.setCurrentSong(id)
+                                            context.setIsPlaying(true)
+                                        }
                                     }}
                                 >
                                     <FaPlay />

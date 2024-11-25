@@ -35,14 +35,26 @@ const SongBar: React.FC = () => {
     }));
   },[])
 
+  useEffect(() =>{
+  if (songState.player != undefined){
+   if(context.isPlaying){
+    songState.player.playVideo()
+   }
+   else{
+    songState.player.pauseVideo()
+   }
+  }
+  },[context.isPlaying])
 
   // Handle play/pause toggle
   const togglePlayPause = (): void => {
     if (songState.player != undefined) {
-      if (songState.isPlaying == true) {
-        songState.player.pauseVideo();
+      if (songState.isPlaying) {
+        
+        context.setIsPlaying(false);
       } else {
-        songState.player.playVideo();
+        
+        context.setIsPlaying(true);
       }
     }
     setSongState(prevState => ({
