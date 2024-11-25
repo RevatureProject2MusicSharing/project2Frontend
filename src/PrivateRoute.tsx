@@ -19,7 +19,7 @@ export const PrivateRoute = ({children, roles}:{children:ReactNode; roles?:strin
         return(
         <>
         {console.log("test")}
-         <h3>Unauthorized.</h3>
+         <h3 id="unauthorizedHeader">Unauthorized.</h3>
          <button onClick={() => navigate(-1)}>Go back.</button>
         </>)
     }
