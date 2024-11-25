@@ -18,7 +18,7 @@ interface AppProviderProps {
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
-  const [currentSong, setCurrentSong] = useState<string | undefined>("RjNj__yp9Tk");
+  const [currentSong, setCurrentSong] = useState<string | undefined>("bc0KhhjJP98");
 
   // Function to log in
   const login = () => setIsLoggedIn(true);
