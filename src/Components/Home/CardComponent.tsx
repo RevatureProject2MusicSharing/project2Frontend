@@ -3,9 +3,9 @@ import { useState } from 'react'
 // import '../App.css'
 import "./home.css"
 import { motion, useScroll, Variants } from 'motion/react'
-import { GiPokerHand } from "react-icons/gi";
-import { Button } from 'react-bootstrap';
-import { desc, div } from 'motion/react-client';
+// import { GiPokerHand } from "react-icons/gi";
+// import { Button } from 'react-bootstrap';
+// import { desc, div } from 'motion/react-client';
 
 export const CardComponent:React.FC = () => { 
     interface Props {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./playlist.css"
@@ -25,6 +25,8 @@ interface Song {
 
 export const PlaylistComponent:React.FC = () => {
   // List of Playlist
+
+
   const songs = [
     // HARDCODED DELETE LATER
     { songId: 1, songName: "Come and Get Your Love", youtubeLink: "bc0KhhjJP98", genre: "Disco", artist: "Redbone"},
@@ -56,7 +58,9 @@ export const PlaylistComponent:React.FC = () => {
   ]);
     
   const[currSongList, setSonglist] = useState<Song[]>([])
-
+  useEffect(()=>{
+     setSonglist(playlists[0].songList)
+  }, [])
 
   // Selected Playlist
   const navigate = useNavigate();
