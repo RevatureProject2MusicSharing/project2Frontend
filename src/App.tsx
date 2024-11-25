@@ -4,6 +4,7 @@ import { Songs } from './Components/Songs/SongsPage'
 import Home from './Components/Home/Home'
 import SongBar from './Components/SongBar/SongBar'
 import { AppProvider } from './Components/AppContext/AppContext'
+import { User } from './Components/User/User'
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       <BrowserRouter>
           <Routes>
             <Route path="" element={<Home/>} /> 
+            <Route path="/users" element={<User/>}/>
           </Routes>
         </BrowserRouter>
         <SongBar />

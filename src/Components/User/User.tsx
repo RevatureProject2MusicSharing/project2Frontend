@@ -26,9 +26,11 @@ const getAllUsers = async () => {
 
 
 //const response = await axios.get("URL to RDS /users")
+// "http//p2team1.cbsegmk0oe5b.us-east-1.rds.amazonaws.com:5432/postgres/users"
 
-const response = await axios.get("http//p2team1.cbsegmk0oe5b.us-east-1.rds.amazonaws.com:5432/postgres/users")
+const response = await axios.get("http//localhost:8282/users")
 
+    response.data= Array.from(response.data);
 
 setUsers(response.data)
 
