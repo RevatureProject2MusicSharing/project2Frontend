@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Dropdown, DropdownButton, Form, Modal } from "react-bootstrap"
 import 'bootstrap/dist/css/bootstrap.css';
 import { FaCog, FaPause, FaPlay } from "react-icons/fa";
 import { getYouTubeId } from "../../utils/Utils";
 import { useAppContext } from "../AppContext/AppContext";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 type SongInfo = {
     songId: number,
@@ -20,6 +22,9 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
     // Context API
     const context = useAppContext()
 
+    // Navigate
+    const navigate = useNavigate()
+
     // State for editing the song
     const [currentSong, setCurrentSong] = useState({
         "songName": song.songName,
@@ -30,9 +35,6 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
 
     // State for storing Playlist ID to add to
     const [playlistID, setPlaylistID] = useState<number>(0)
-
-    // Temporary state for storing JWT
-    const [jwt, setJwt] = useState("")
 
     // State for updating the component
     const [version, setVersion] = useState(0)
@@ -66,12 +68,12 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
         if (playlistID === null || playlistID < 1) {
             console.log("invalid")
         } else {
-            await axios.post("http://localhost:8080/playlists/" + playlistID, {songid: song.songId}, { headers: {"Authorization": "Bearer " + jwt} })
+            await axios.post("http://localhost:8080/playlists/" + playlistID, {songid: song.songId}, { headers: {"Authorization": "Bearer " + Cookies.get('jwt')} })
             .then(() => {
                 setVersion((prevState) => prevState++)
             })
-            .catch((err) => {
-                alert(err.message)
+            .catch(() => {
+                navigate("/login")
             })
         }
     }
@@ -82,12 +84,12 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
             console.log("invalid")
         } else {
             // console.log(song)
-            await axios.put("http://localhost:8080/songs/" + song.songId, currentSong, { headers: {"Authorization": "Bearer " + jwt} })
+            await axios.put("http://localhost:8080/songs/" + song.songId, currentSong, { headers: {"Authorization": "Bearer " + Cookies.get('jwt')} })
             .then(() => {
                 setVersion((prevState) => prevState++)
             })
-            .catch((err) => {
-                alert(err.message)
+            .catch(() => {
+                navigate("/login")
             })
         }
     }
@@ -96,37 +98,16 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
     const handleDelete = async () => {
 
         if (window.confirm("Delete song with ID: " + song.songId + "?")) {
-            await axios.delete("http://localhost:8080/songs/" + song.songId, { headers: {"Authorization": "Bearer " + jwt} })
+            await axios.delete("http://localhost:8080/songs/" + song.songId, { headers: {"Authorization": "Bearer " + Cookies.get('jwt')} })
             .then(() => {
                 setHidden(true)
             })
-            .catch((err) => {
-                console.log(err.message)
+            .catch(() => {
+                navigate("/login")
             })
         }
 
     }
-
-    // Temp function for logging in
-    const login = async () => {
-        await axios.post("http://localhost:8080/login", {
-                "username": "Michael",
-                "password": "password"
-            })
-            .then((res) => {
-                // console.log(res)
-                // console.log("hey i made it")
-                setJwt(res.data.jwt)
-            })
-            .catch((err) => {
-                alert(err.message)
-            })
-    }
-
-    // useEffect to trigger getSongs() on component load
-    useEffect(() => {
-        login()
-    }, [])
 
     return (
         <>
@@ -141,6 +122,7 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
                                         className="rounded-circle btn-success"
                                         onClick={() => {
                                             // TODO: Pause currently playing song
+                                            context.setIsPlaying(false)
                                         }}
                                     >
                                         <FaPause />
