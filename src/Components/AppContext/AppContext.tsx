@@ -1,10 +1,13 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+import Cookies from "js-cookie";
+import { jwtDecode } from 'jwt-decode';
 
 // Define the shape of the global state
 interface GlobalState {
   isLoggedIn: boolean;
   currentSong: string | undefined;
   isPlaying: boolean;
+  userRole: string;
   login: () => void;
   logout: () => void;
   setCurrentSong: (song: string) => void;
@@ -22,10 +25,15 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentSong, setCurrentSong] = useState<string | undefined>("RjNj__yp9Tk");
+  const [userRole, setUserRole] = useState<string>("user");
 
   // Function to log in
   const login = () => {
     setIsLoggedIn(true)
+    const token = Cookies.get('jwt');
+    const decoded = jwtDecode(token);
+    setUserRole(decoded.role)
+
   };
 
   // Function to log out
@@ -39,7 +47,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   }
 
   return (
-    <AppContext.Provider value={{ isLoggedIn, currentSong, isPlaying, login, logout, setIsPlaying: updateIsPlaying, setCurrentSong: updateCurrentSong }}>
+    <AppContext.Provider value={{ isLoggedIn, currentSong, isPlaying, userRole, login, logout, setIsPlaying: updateIsPlaying, setCurrentSong: updateCurrentSong }}>
       {children}
     </AppContext.Provider>
   );
