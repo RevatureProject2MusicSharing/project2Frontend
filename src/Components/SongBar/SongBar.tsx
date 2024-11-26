@@ -125,7 +125,7 @@ const SongBar: React.FC = () => {
     width: '170',
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
+      autoplay: 0,
       rel: 0,
       controls: 0,
       enablejsapi: 1

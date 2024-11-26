@@ -7,8 +7,9 @@
     row-gap:10px;
     flex-direction: column;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-    width:30vw;
-    height:75vh;
+    width:fit-content;
+    height:fit-content;
+    
     
     
 }
@@ -25,9 +26,16 @@
     font-weight:bold;
     font-size:30px;
 }
-#icon{
-    scale: 5;
+.icon{
+    scale: 2.5;
     margin-bottom: 20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:10px;
+    
+    
+    
     
 }
 .box {
@@ -40,11 +48,8 @@
     border-color:#017228;
     scale:.8
 }
-#indexBody{
-    background: linear-gradient(rgba(0, 0, 0, 0.808) 0%, rgb(0, 0, 0) 100%);
-    height:100vh;
-    
-  }
+
+
 button:hover{
     border-color:rgb(175, 236, 193);
     border-width:2px;
