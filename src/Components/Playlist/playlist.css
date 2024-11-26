@@ -52,3 +52,15 @@ position : absolute;
 .table {
   justify-content: center;
 }
+
+.lmao {
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+.custom-switch custom-control-input:active{
+  background-color: green;
+}

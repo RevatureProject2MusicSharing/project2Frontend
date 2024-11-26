@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./playlist.css"
-import { Container, Dropdown } from "react-bootstrap";
+import { Button, Container, Dropdown } from "react-bootstrap";
 import { PlaylistSongTable } from "./PlaylistSongtable";
+import { nav } from "motion/react-client";
+import { store } from "../../globalData/store";
 /**
  * Playlist Object
  */
@@ -49,13 +51,36 @@ export const PlaylistComponent:React.FC = () => {
     { songId: 4, songName: "Plastic Love", youtubeLink: "W0GMlHni1qQ", genre: "funk", artist: "Maria Takeuchi" }
   ];
 
+  const songs4 = [
+    // HARDCODED DELETE LATER
+    { songId: 1, songName: "Stay With Me", youtubeLink: "VEe_yIbW64w", genre: "funk", artist: "Miki Matsubara"},
+    { songId: 2, songName: "Telephone Number", youtubeLink: "I0JVRcJLea8", genre: "funk", artist: "Junko Ohashi" },
+    { songId: 3, songName: "4:00AM", youtubeLink: "_sOKkON_UnQ", genre: "funk", artist: "Taeko Onuki" },
+    { songId: 4, songName: "Plastic Love", youtubeLink: "W0GMlHni1qQ", genre: "funk", artist: "Maria Takeuchi" }
+  ];
+
   
   const [playlists, setPlaylists] = useState<Playlist[]>([
     // HARDCODED DELETE LATER
-    { playlistId: 1, playlistName: "Disco Playlist", isPublic: true, songList : songs},
-    { playlistId: 2, playlistName: "Pop", isPublic: false,  songList : songs2},
-    { playlistId: 3, playlistName: "City Pop", isPublic: true, songList : songs3},
+    { playlistId: 1, playlistName: "Disco Playlist", isPublic: true, songList : store.songs },
+    { playlistId: 2, playlistName: "Pop", isPublic: false,  songList : store.songs2},
+    { playlistId: 3, playlistName: "City Pop", isPublic: true, songList : store.songs3},
   ]);
+
+  const newPlaylist = [
+    { playlistId: 1, playlistName: "Disco Playlist", isPublic: true, songList : store.songs },
+    { playlistId: 2, playlistName: "Pop", isPublic: false,  songList : store.songs2},
+    { playlistId: 3, playlistName: "City Pop", isPublic: true, songList : store.songs3},
+    {playlistId: 4, playlistName: "Custom", isPublic: true, songList : store.songs4}]
+
+    const oldPlaylist = [
+      { playlistId: 1, playlistName: "Disco Playlist", isPublic: true, songList : store.songs },
+      { playlistId: 2, playlistName: "Pop", isPublic: false,  songList : store.songs2},
+      { playlistId: 3, playlistName: "City Pop", isPublic: true, songList : store.songs3},]
+
+    useEffect(()=>{
+      fakeAddPlaylist()
+  }, [])
     
   const[currSongList, setSonglist] = useState<Song[]>([])
   useEffect(()=>{
@@ -68,25 +93,41 @@ export const PlaylistComponent:React.FC = () => {
     setSonglist(playlist.songList)
   }
 
+  function fakeAddPlaylist() {
+      if(store.playlistCreated &&  store.playedOnce) {
+          setPlaylists(newPlaylist)
+      }
+  }
+  function fakeDeletePlaylist() {
+        setPlaylists(oldPlaylist)
+}
   // HTML
   return (
     <>
       <div className="main">
-        <h1>Playlists</h1>    
-        <Dropdown>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-          Playlist
-          </Dropdown.Toggle>
-          <Dropdown.Menu> 
-            {playlists.map((playlist, index) => (
-          <section className="row bg-secondary m-2 rounded p-custom" key={index} onClick={() => handlePlaylistClick(playlist)}>
-            <div className="col-sm-4 p-3">{playlist.playlistName}</div>
-            <div className="col-sm-4 p-3">Username</div>
-            <div className="col-sm-4 p-3">{playlist.isPublic ? "Public" : "Private"}</div>
-          </section>
-        ))}
-          </Dropdown.Menu>
-        </Dropdown>
+        <h1>Playlists</h1>  
+          <div className="lmao">
+          <Button onClick={() => navigate("/AddPlaylist")}>Add Playlist</Button>    
+          <Button onClick={() => {
+            store.playlistCreated = false;
+            setSonglist(playlists[0].songList);
+            fakeDeletePlaylist()
+          }}>Delete Playlist
+          </Button>    
+          <Dropdown>
+            <Dropdown.Toggle variant="success" id="dropdown-basic">
+            Playlist
+            </Dropdown.Toggle>
+            <Dropdown.Menu> 
+              {playlists.map((playlist, index) => (
+            <section className="row bg-secondary m-2 rounded p-custom" key={index} onClick={() => handlePlaylistClick(playlist)}>
+              <div className="col-sm-4 p-3">{playlist.playlistName}</div>
+              <div className="col-sm-4 p-3">{playlist.isPublic ? "Public" : "Private"}</div>
+            </section>
+          ))}
+            </Dropdown.Menu>
+          </Dropdown>
+          </div>
         <PlaylistSongTable songs={currSongList}></PlaylistSongTable>
       </div>
     </>
