@@ -66,8 +66,9 @@ return(
     
     <Container id="LoginBox">
         <Row id="header">
-        
-        <GiPokerHand id="icon" />
+        <div className="icon">
+        <GiPokerHand className="icon" />
+        </div>
         <span className = "LoginText" id="LoginHeader">Log in to All In Audio</span>
         <Col>
         {invalidLogin ? (<><PiWarningCircleLight className = "warning" /><span className = "warning">Invalid credentials.</span></>):(<></>)}
