@@ -4,12 +4,20 @@
     background-color:#1b1b1b;
     border-radius: 15px;
     padding:75px;
-    width:30vw;
+    width:fit-content;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     color:aliceblue;
-    height: 75vh;
+    height: fit-content;
+    z-index:1;
+    
    
 }
 .warning{
     color:#ed2c3f
+}
+#usernameAlreadyExistsToast{
+    z-index:1;
+    position:fixed;
+    right:50vw-250px;
+    width:250px;
 }

@@ -1,11 +1,12 @@
 import axios from "axios"
 import { useState } from "react"
-import { Col, Container, Form, Row } from "react-bootstrap"
+import { Col, Container, Form, Row, Toast } from "react-bootstrap"
 import "./Register.css"
 import { motion } from "motion/react"
 import { RegisterSuccess } from "./RegisterSuccess"
 import { PiWarningCircleLight } from "react-icons/pi";
 import { Link } from "react-router-dom"
+import { GiPokerHand } from "react-icons/gi"
 
 export const Register:React.FC = () => {
 
@@ -15,7 +16,9 @@ export const Register:React.FC = () => {
         password:""
     })
 
-    
+    const[passwordMatch,setPasswordMatch] = useState(true);
+
+
 
     //state variable to do conditional rendering on successful registration
     const[isRegistered, setIsRegistered] = useState(false);
@@ -30,6 +33,15 @@ export const Register:React.FC = () => {
 
         setUser((user) => ({...user, [name]:value}))
 
+        if(input.target.name ==="password2"){
+            if(input.target.value === user.password){
+                setPasswordMatch(true)
+            }
+            else{
+                setPasswordMatch(false)
+            }
+        }
+
     }
 
     
@@ -37,7 +49,6 @@ export const Register:React.FC = () => {
     const register = async () => {
 
         //TODO: check if username is already exists in DB before sending post request.
-        
         //post request for registering user
         const response = await axios.post("http://localhost:8080/register", user)
         .then(() => {setIsRegistered(true)
@@ -56,10 +67,11 @@ export const Register:React.FC = () => {
                 <RegisterSuccess />
             ): ( 
             <><Form>
-                        <h1>Register</h1>
+                        <GiPokerHand id="icon" />
+                        <h1 id="LoginHeader">Register</h1>
                         <Form.Group>
                             <Form.Label className="LoginLabel mb-0">Username</Form.Label>
-                            <Form.Control className="mb-3"
+                            <Form.Control className="mb-2"
                                 type="text"
                                 placeholder="Username"
                                 data-bs-theme="dark"
@@ -68,26 +80,31 @@ export const Register:React.FC = () => {
                         </Form.Group>
                         <Form.Group>
                             <Form.Label className="LoginLabel mb-0">Password</Form.Label>
-                            <Form.Control className="mb-3"
+                            <Form.Control className="mb-2"
                                 type="password"
                                 placeholder="Password"
                                 data-bs-theme="dark"
                                 name="password"
                                 onChange={storeValues} />
                         </Form.Group>
-
+                        {passwordMatch ? (<></>):(<><PiWarningCircleLight className = "warning" /><span className = "warning">Password does not match.</span></>)}
                         <Form.Group>
                             <Form.Label className="LoginLabel mb-0">Confirm Password</Form.Label>
-                            <Form.Control className="mb-3"
+                            <Form.Control className="mb-2"
                                 type="password"
                                 placeholder="Password"
                                 data-bs-theme="dark"
-                                name="password"
+                                name="password2"
                                 onChange={storeValues} />
                         </Form.Group>
                         </Form>
-                        <Col >
-                        {isInvalid ? (<><PiWarningCircleLight className = "warning" /><span className = "warning">Invalid credentials.</span></>):(<></>)}
+                        <Col className="mb-4">
+                            <>
+                            <Toast id="usernameAlreadyExistsToast" onClose={() => setIsInvalid(false)} show={isInvalid} delay={3000} autohide>
+                            <PiWarningCircleLight className = "warning" />
+                            <small className = "warning">That username already exists!</small>
+                            </Toast>
+                            </>
                         </Col>
                         
                         <motion.button
