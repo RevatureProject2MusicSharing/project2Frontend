@@ -8,6 +8,7 @@ import { AppProvider } from './Components/AppContext/AppContext'
 import { User } from './Components/User/User'
 import { PrivateRoute } from './PrivateRoute'
 import { PlaylistComponent } from './Components/Playlist/PlaylistComponent';
+import { Home } from './Components/Home/Home';
 
 
 function App() {
