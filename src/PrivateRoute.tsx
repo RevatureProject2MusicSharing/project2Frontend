@@ -16,7 +16,7 @@ export const PrivateRoute = ({children, roles}:{children:ReactNode; roles?:strin
         return <Navigate to="/login"/>;
     }
 
-    if(roles && !roles.some((role: string) => Cookies.get('role').includes(role))){
+    if(roles && !roles.some((role: string) => String(Cookies.get('role')).includes(role))){
         return(
         <>
        

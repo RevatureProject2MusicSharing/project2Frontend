@@ -8,10 +8,14 @@ interface GlobalState {
   currentSong: string | undefined;
   isPlaying: boolean;
   userRole: string;
+  songName: string;
+  songArtist: string;
   login: () => void;
   logout: () => void;
   setCurrentSong: (song: string) => void;
   setIsPlaying: (currState: boolean) => void;
+  setSongName: (songName: string) => void;
+  setSongArtist: (songArtist: string) => void;
 }
 
 // Create the context with a default value (we'll provide the default values later)
@@ -27,11 +31,15 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [currentSong, setCurrentSong] = useState<string | undefined>("RjNj__yp9Tk");
   const [userRole, setUserRole] = useState<string>("");
 
+  const [songName, setSongName] = useState<string>("Little Wing");
+  const [songArtist, setSongArtist] = useState<string>("Jimi Hendrix");
+
   // Function to log in
   const login = () => {
     setIsLoggedIn(true)
     const token = Cookies.get('jwt');
-    const decoded = jwtDecode(token);
+    const decoded = jwtDecode(String(token));
+    console.log(decoded);
     Cookies.set('role', decoded.role, { path: '/', expires: 1, secure: false, sameSite: 'Strict' });
 
   };
@@ -39,8 +47,13 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   // Function to log out
   const logout = () => {
     Cookies.remove('jwt');
-    setIsLoggedIn(false)};
-
+    setIsLoggedIn(false)
+    setIsPlaying(false);
+    setCurrentSong("RjNj__yp9Tk");
+    setSongName("Little Wing");
+    setSongArtist("Jimi Hendrix");
+  };
+    
   // Function to set the current song
   const updateCurrentSong = (songId: string) => setCurrentSong(songId);
   
@@ -49,7 +62,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   }
 
   return (
-    <AppContext.Provider value={{ isLoggedIn, currentSong, isPlaying, userRole, login, logout, setIsPlaying: updateIsPlaying, setCurrentSong: updateCurrentSong }}>
+    <AppContext.Provider value={{ isLoggedIn, currentSong, isPlaying, userRole, songName, songArtist, login, logout, setIsPlaying: updateIsPlaying, setCurrentSong: updateCurrentSong, setSongName, setSongArtist }}>
       {children}
     </AppContext.Provider>
   );

@@ -50,6 +50,8 @@ export const Songs: React.FC = () => {
             const youtubeId = getYouTubeId(res.data.youtubeLink)
             if (youtubeId) {
                 context.setCurrentSong(youtubeId)
+                context.setSongName(res.data.songName)
+                context.setSongArtist(res.data.artistName)
             }
         })
         .catch(() => {
@@ -105,7 +107,7 @@ export const Songs: React.FC = () => {
 
     return (
         <>
-            <Container style={{padding: "25px", width: "100vw", marginTop: "5%", marginBottom: "10%"}}>
+            <Container style={{padding: "25px", width: "100vw", marginTop: "5%", marginBottom: "10%", height: "100%"}}>
                 {/* Header */}
                 <h1 style={{textAlign: "left"}}>Songs</h1>
 
@@ -123,16 +125,19 @@ export const Songs: React.FC = () => {
                 </div>
 
                 {/* Button for adding a new song */}
-                <motion.button
-                    style={{width: "80%", marginBottom: "5px"}}
-                    className="btn btn-success mx-auto"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                    onClick={handleShow}
-                >
-                    Add New Song
-                </motion.button>
+                {Cookies.get('role') === 'admin' ?
+                    <motion.button
+                        style={{width: "80%", marginBottom: "5px"}}
+                        className="btn btn-success mx-auto"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                        onClick={handleShow}
+                    >
+                        Add New Song
+                    </motion.button> : ""
+                }
+                
 
                 <motion.button
                     style={{width: "80%"}}

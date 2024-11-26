@@ -35,6 +35,9 @@ const storeValues = (input:any) => {
 
 const login = async (loginCreds: any) => {
     try {
+        if(Cookies.get('jwt')){
+            navigate("/songs")
+        }
         // Post request for registering the user
         const response = await axios.post("http://localhost:8080/login", loginCreds);
 
@@ -48,7 +51,7 @@ const login = async (loginCreds: any) => {
         navigate("/songs");
 
     } catch (error) {
-        alert("Failed! " + error);
+        setInvalidLogin(true)
     }
 };
 
