@@ -63,16 +63,25 @@ const handleKeyPress = async (event: any) => {
 }
 
 return(
-    
+    <motion.div
+    initial={{opacity:0}}
+    animate={{opacity:1}}
+    exit={{opacity:0}}
+
+    >
+
     <Container id="LoginBox">
         <Row id="header">
-        <div className="icon">
-        <GiPokerHand className="icon" />
+        <div className="iconLoginContainer">
+        <GiPokerHand id="loginIcon" />
         </div>
         <span className = "LoginText" id="LoginHeader">Log in to All In Audio</span>
-        <Col>
-        {invalidLogin ? (<><PiWarningCircleLight className = "warning" /><span className = "warning">Invalid credentials.</span></>):(<></>)}
+        <Col id="loginStatusMessage">
+        {Cookies.get('jwt') ? (<div >You are logged in already!<br></br> Press log in to continue.</div>):(<></>)}
         </Col>
+        </Row>
+        <Row id="invalidCredentials">
+        {invalidLogin ? (<><span className = "warning"><PiWarningCircleLight className = "warning" />Invalid credentials.</span></>):(<></>)}
         </Row>
         <Row id="formFieldRow">
             <Form>
@@ -98,7 +107,7 @@ return(
                 </Form.Group>
             </Form>
         </Row>
-        <Row>
+        <Row id="logInContainer">
             <motion.button
             className="box"
             whileHover={{ scale: 1.1 }}
@@ -110,8 +119,9 @@ return(
             </Row>
             <Row className="d-flex align-items-center">
             <span>Don't have an account?</span>
-            <Link to="/register" className="ms-1" data-bs-theme="dark">Sign up here.</Link>
+            <Link to="/register" className="ms-0" data-bs-theme="dark">Sign up here.</Link>
         </Row>
     </Container>
+    </motion.div>
     )
 }

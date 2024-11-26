@@ -2,13 +2,13 @@
 #LoginBox{
     display:flex;
     background-color:#1b1b1b;
-    padding:50px;
+    padding:40px;
     border-radius:15px;
     row-gap:10px;
     flex-direction: column;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-    width:fit-content;
-    height:fit-content;
+    width:500px;
+    height:600px
     
     
     
@@ -26,18 +26,21 @@
     font-weight:bold;
     font-size:30px;
 }
-.icon{
-    scale: 2.5;
+.iconLoginContainer{
     margin-bottom: 20px;
     display:flex;
     justify-content:center;
     align-items:center;
     margin-top:10px;
-    
-    
-    
-    
 }
+    
+#loginIcon{
+    scale:5;
+    position:absolute;
+    top:70px;
+    right:50vw;
+}    
+
 .box {
    
     height: 80px;
@@ -46,9 +49,12 @@
     cursor: pointer;
     align-content:center;
     border-color:#017228;
-    scale:.8
+    scale:.8;
+    width:300px
 }
-
+#logInContainer{
+    justify-content: center;
+}
 
 button:hover{
     border-color:rgb(175, 236, 193);
@@ -61,5 +67,12 @@ span{
     width:300px;
     align-self:center;
 }
+#loginStatusMessage{
+   width:100px;
+}
+#header{
+    height:200px;
+}
+
 
 

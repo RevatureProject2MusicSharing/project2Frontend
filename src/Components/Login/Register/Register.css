@@ -4,20 +4,50 @@
     background-color:#1b1b1b;
     border-radius: 15px;
     padding:75px;
-    width:fit-content;
+    width:500px;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     color:aliceblue;
-    height: fit-content;
+    height: 600px;
     z-index:1;
     
    
 }
 .warning{
-    color:#ed2c3f
+    color:#ed2c3f;
+    
+    
+}
+#warning{
+    width:50px;
 }
 #usernameAlreadyExistsToast{
     z-index:1;
-    position:fixed;
-    right:50vw-250px;
+    position:absolute;
+    right:43.5vw;
     width:250px;
+    background:#1b1b1b
+}
+#registerIcon{
+    scale:5;
+    margin-bottom:20px;
+    position:absolute;
+    top:70px;
+    right:50vw;
+}
+#invalidCredentials{
+    height:50px;
+}
+#passwordMatchStatus{
+    height:10px;
+}
+#confirmButton{
+    height: 80px;
+    border-radius: 50px;
+    background-color: #1ed760;
+    cursor: pointer;
+    align-content:center;
+    border-color:#017228;
+    scale:.8;
+    width:300px;
+    
 }
