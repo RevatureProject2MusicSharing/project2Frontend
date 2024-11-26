@@ -2,10 +2,9 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme:dark;
   color: rgba(255, 255, 255, 0.87);
-
+  margin-top: 50px;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -42,6 +41,14 @@ position : absolute;
   right:0px;
   z-index:100
 } 
-image:hover {
+.image:hover {
   filter: brightness(50%);
+}
+.test {
+  background-color: transparent;
+  justify-content: center;
+  width:1024px;
+}
+.table {
+  justify-content: center;
 }

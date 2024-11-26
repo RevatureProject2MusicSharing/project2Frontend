@@ -1,4 +1,4 @@
-import { Button, Container, Dropdown, DropdownButton, DropdownMenu, Table } from "react-bootstrap"
+import { Button, Container, Dropdown, DropdownButton, DropdownMenu, Row, Table } from "react-bootstrap"
 import { useAppContext } from "../AppContext/AppContext"
 import { FaPlay } from "react-icons/fa";
 export const PlaylistSongTable:React.FC<{songs:any[]}> = ({songs}) => {
@@ -8,8 +8,9 @@ export const PlaylistSongTable:React.FC<{songs:any[]}> = ({songs}) => {
         context.setCurrentSong(youtubeLink)
     }
     return(
-        <Container>
-             <Table>
+        <Container className="test">
+            <Row className="justify-content-md-center">      
+             <Table className="table">
                 <thead>
                     <tr>
                         <th></th>
@@ -46,7 +47,9 @@ export const PlaylistSongTable:React.FC<{songs:any[]}> = ({songs}) => {
                     ))}
                 </tbody>
             </Table>
+            </Row>
         </Container>
+        
     )
 
 }
