@@ -76,10 +76,10 @@ return(
         <GiPokerHand id="loginIcon" />
         </div>
         <span className = "LoginText" id="LoginHeader">Log in to All In Audio</span>
-        <Col id="loginStatusMessage">
-        {Cookies.get('jwt') ? (<div >You are logged in already!<br></br> Press log in to continue.</div>):(<></>)}
-        </Col>
         </Row>
+        <Col id="loginStatusMessage">
+        {Cookies.get('jwt') ? (< >You are logged in already!<br></br> Press log in to continue.</>):(<></>)}
+        </Col>
         <Row id="invalidCredentials">
         {invalidLogin ? (<><span className = "warning"><PiWarningCircleLight className = "warning" />Invalid credentials.</span></>):(<></>)}
         </Row>

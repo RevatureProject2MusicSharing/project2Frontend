@@ -8,7 +8,9 @@
     flex-direction: column;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     width:500px;
-    height:600px
+    height:700px;
+    align-items:center
+    
     
     
     
@@ -68,10 +70,10 @@ span{
     align-self:center;
 }
 #loginStatusMessage{
-   width:100px;
+   width:300px;
 }
 #header{
-    height:200px;
+    height:100px;
 }
 
 
