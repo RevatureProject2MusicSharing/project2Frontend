@@ -47,8 +47,13 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   // Function to log out
   const logout = () => {
     Cookies.remove('jwt');
-    setIsLoggedIn(false)};
-
+    setIsLoggedIn(false)
+    setIsPlaying(false);
+    setCurrentSong("RjNj__yp9Tk");
+    setSongName("Little Wing");
+    setSongArtist("Jimi Hendrix");
+  };
+    
   // Function to set the current song
   const updateCurrentSong = (songId: string) => setCurrentSong(songId);
   

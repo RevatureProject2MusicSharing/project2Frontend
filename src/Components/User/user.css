@@ -9,3 +9,6 @@
 .custom-user-border {
     border-bottom: 1px solid gray;
 }
+#indexBody{
+    height:fit-content
+}

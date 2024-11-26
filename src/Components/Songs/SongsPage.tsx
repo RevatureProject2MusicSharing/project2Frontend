@@ -125,7 +125,7 @@ export const Songs: React.FC = () => {
                 </div>
 
                 {/* Button for adding a new song */}
-                {Cookies.get('role') === 'Admin' ?
+                {Cookies.get('role') === 'admin' ?
                     <motion.button
                         style={{width: "80%", marginBottom: "5px"}}
                         className="btn btn-success mx-auto"
