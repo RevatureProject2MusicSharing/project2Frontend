@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../AppContext/AppContext';
 import { GiPokerHand } from "react-icons/gi";
 import { motion } from 'motion/react';
+import Cookies from "js-cookie";
 
 const Navbar: React.FC = () => {
   const context = useAppContext();
   const navigate = useNavigate();
+  const [isAdmin,setIsAdmin] = useState(false);
+
+  useEffect(() =>{
+    if(String(Cookies.get('role')) == "admin"){
+      setIsAdmin(true);
+      
+    }
+  },[])
+
   return (
     <>
     {context.isLoggedIn ? (
@@ -27,7 +37,7 @@ const Navbar: React.FC = () => {
       <div className="navbar__buttons">
         <button onClick={() => navigate("/playlists")} className="navbar__button">Playlists</button>
         <button onClick={() => navigate("/songs")} className="navbar__button">Songs</button>
-        <button onClick={() => navigate("/users")} className="navbar__button">Users</button>
+        {isAdmin ? (<button onClick={() => navigate("/users")} className="navbar__button">Users</button>):(<></>)}
       </div>
 
       {/* Logout Button */}
