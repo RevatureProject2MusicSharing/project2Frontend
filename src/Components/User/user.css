@@ -1,0 +1,11 @@
+.custom-user-row {
+    border-bottom: 1px solid gray;
+}
+
+.custom-user-row:hover {
+    background-color: #323539;
+}
+
+.custom-user-border {
+    border-bottom: 1px solid gray;
+}
