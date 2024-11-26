@@ -10,10 +10,6 @@
     height: 75vh;
    
 }
-#indexBody{
-    height:100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.808) 0%, rgb(0, 0, 0) 100%);
-}
 .warning{
     color:#ed2c3f
 }
