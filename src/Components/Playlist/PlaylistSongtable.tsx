@@ -1,6 +1,7 @@
 import { Button, Container, Dropdown, DropdownButton, DropdownMenu, Row, Table } from "react-bootstrap"
 import { useAppContext } from "../AppContext/AppContext"
 import { FaPlay } from "react-icons/fa";
+import "./playlist.css"
 export const PlaylistSongTable:React.FC<{songs:any[]}> = ({songs}) => {
     const context = useAppContext();
     
@@ -10,9 +11,9 @@ export const PlaylistSongTable:React.FC<{songs:any[]}> = ({songs}) => {
         context.setSongArtist(songArtist);
     }
     return(
-        <Container className="test">
+        <Container className="test" style={{padding: "12px"}}>
             <Row className="justify-content-md-center">      
-             <Table className="table">
+             <Table style={{gap: "5px"}} className="table table-dark table-hover" id="dark">
                 <thead>
                     <tr>
                         <th></th>

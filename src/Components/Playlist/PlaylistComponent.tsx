@@ -108,7 +108,7 @@ export const PlaylistComponent:React.FC = () => {
         <h1>Playlists</h1>  
           <div className="lmao">
           <Button onClick={() => navigate("/AddPlaylist")}>Add Playlist</Button>    
-          <Button onClick={() => {
+          <Button className="btn-danger" onClick={() => {
             store.playlistCreated = false;
             setSonglist(playlists[0].songList);
             fakeDeletePlaylist()
@@ -120,10 +120,8 @@ export const PlaylistComponent:React.FC = () => {
             </Dropdown.Toggle>
             <Dropdown.Menu> 
               {playlists.map((playlist, index) => (
-            <section className="row bg-secondary m-2 rounded p-custom" key={index} onClick={() => handlePlaylistClick(playlist)}>
-              <div className="col-sm-4 p-3">{playlist.playlistName}</div>
-              <div className="col-sm-4 p-3">{playlist.isPublic ? "Public" : "Private"}</div>
-            </section>
+            <Dropdown.Item key={index} onClick={() => handlePlaylistClick(playlist)}>{playlist.playlistName}</Dropdown.Item>
+              
           ))}
             </Dropdown.Menu>
           </Dropdown>

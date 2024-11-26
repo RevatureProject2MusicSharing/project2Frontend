@@ -22,11 +22,11 @@ export const AddPlaylist:React.FC = () => {
                     placeholder ="Name" 
                     data-bs-theme = "dark"
                     name="Playlist Name"/>
-                    <Form.Check 
+                    {/* <Form.Check 
                     type="switch"
                     label="Private Playlist"
                     className="custom-switch"
-                    />
+                    /> */}
                 </Form.Group>
 
             </Form>
