@@ -58,7 +58,7 @@ export const Register:React.FC = () => {
         }) //on successful post request change state of isRegistered
         .catch((error) => {
                 console.log(user.username)
-                if(user.username.trim().length === 0 || user.username.trim() === ""){
+                if(user.username.trim().length === 0 || user.username.trim() === "" || user.password.trim().length=== 0){
                     setBlankUsername(true);
                 }
                 else{
@@ -133,7 +133,7 @@ export const Register:React.FC = () => {
                             <Toast id="usernameAlreadyExistsToast" onClose={() => setBlankUsername(false)} show={blankUsername} delay={3000} autohide>
                                 
                             <PiWarningCircleLight className = "warning" />
-                            <small className = "warning">Username field cannot be empty!</small>
+                            <small className = "warning">Username/password fields cannot be empty!</small>
                             </Toast>
                             </>
                         </Col>
