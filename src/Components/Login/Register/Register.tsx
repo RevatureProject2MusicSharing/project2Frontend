@@ -15,6 +15,8 @@ export const Register:React.FC = () => {
         password:""
     })
 
+    
+
     //state variable to do conditional rendering on successful registration
     const[isRegistered, setIsRegistered] = useState(false);
 
@@ -66,6 +68,16 @@ export const Register:React.FC = () => {
                         </Form.Group>
                         <Form.Group>
                             <Form.Label className="LoginLabel mb-0">Password</Form.Label>
+                            <Form.Control className="mb-3"
+                                type="password"
+                                placeholder="Password"
+                                data-bs-theme="dark"
+                                name="password"
+                                onChange={storeValues} />
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label className="LoginLabel mb-0">Confirm Password</Form.Label>
                             <Form.Control className="mb-3"
                                 type="password"
                                 placeholder="Password"

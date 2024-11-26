@@ -40,15 +40,7 @@
     border-color:#017228;
     scale:.8
 }
-#indexBody{
-    background: linear-gradient(to bottom, #000000, #202020, #000000);
-    background-size: 600% 100%;
-    animation: gradient 16s linear infinite;
-    animation-direction: alternate;
-    height:100%;
-    
-    
-}
+
 
 button:hover{
     border-color:rgb(175, 236, 193);
