@@ -162,7 +162,7 @@ export const Song: React.FC<{song: SongInfo}> = ({song}) => {
                     {/* <td>{songInfo.youtubeLink}</td> */}
                     <td className="text-center align-middle">{currentSong.genre}</td>
                     <td className="text-center align-middle" style={{textAlign: "right"}}>
-                        {Cookies.get('role') === 'Admin' ? <DropdownButton data-bs-theme="dark" variant="success" id="dropdown-basic-button" title={<FaCog />}>
+                        {Cookies.get('role') === 'admin' ? <DropdownButton data-bs-theme="dark" variant="success" id="dropdown-basic-button" title={<FaCog />}>
                             <Dropdown.Item onClick={handleShowEditModal}>Edit Song</Dropdown.Item>
                             {/* <Dropdown.Item onClick={handleShowPlaylistModal}>Add to Playlist</Dropdown.Item> */}
                             <Dropdown.Item onClick={handleDelete}>Delete Song</Dropdown.Item>
